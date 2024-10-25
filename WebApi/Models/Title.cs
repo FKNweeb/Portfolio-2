@@ -1,9 +1,8 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace DataLayer.Models;
+namespace WebApi.Models;
 
 [Table("title")]
 public class Title
@@ -28,7 +27,7 @@ public class Title
     [Column("num_votes")]
     public int? NumberOfVotes { get; set; }
 
-    
+
     public List<TitleKnowAs?> TitleKnownAs { get; set; }
-    
+
 }
