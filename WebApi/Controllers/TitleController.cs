@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Interfaces;
 using WebApi.Mappers;
@@ -31,7 +32,7 @@ public class TitleController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetTitleById([FromRoute] string id )
     {
-        var title = _context.Titles.FirstOrDefault(t => t.TitleId == id);
+        var title = _context.Titles.Include(k => k.TitleKnownAs).FirstOrDefault(t => t.TitleId == id);
         if(title == null) return NotFound();
 
         return Ok(title);

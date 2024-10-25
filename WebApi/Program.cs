@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Interfaces;
 using WebApi.Repositories;
+using Newtonsoft;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,13 +11,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<ImdbContext>(
-    options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddMvcCore();
+
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
+
+builder.Services.AddDbContext<ImdbContext>(
+    options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ITitlteRepository, TitleRepository>();
 builder.Services.AddScoped<INameRepository, NameRepository>();
