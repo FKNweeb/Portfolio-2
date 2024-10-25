@@ -1,5 +1,4 @@
 using DataLayer.Data;
-using Mapster;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Interfaces;
 using WebApi.Repositories;
@@ -7,7 +6,7 @@ using WebApi.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddMapster();
+
 
 builder.Services.AddControllers();
 
