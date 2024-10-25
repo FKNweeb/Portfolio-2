@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMvcCore();
 
 builder.Services.AddScoped<ITitlteRepository, TitleRepository>();
-
+builder.Services.AddScoped<INameRepository, NameRepository>();
 
 var app = builder.Build();
 

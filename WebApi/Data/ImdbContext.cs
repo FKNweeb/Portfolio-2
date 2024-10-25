@@ -9,4 +9,5 @@ public class ImdbContext : DbContext
     { }
     public DbSet<Title> Titles { get; set; }
     public DbSet<TitleKnowAs> KnowAs { get; set; }
+    public DbSet<Name> Names { get; set; }
 }
