@@ -3,16 +3,16 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace DataLayer.Models;
+namespace WebApi.Models;
 
 [Table("akas")]
 [PrimaryKey(nameof(TitleId), nameof(OrderingAkas))]
-public  class TitleKnowAs
+public class TitleKnowAs
 {
     [Column("akas_id")]
     [Required]
     [ForeignKey(nameof(TitleId))]
-    public string TitleId{ get; set; }
+    public string TitleId { get; set; }
 
     [Column("ordering")]
     [Required]
