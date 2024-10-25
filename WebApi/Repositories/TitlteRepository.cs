@@ -1,8 +1,8 @@
-﻿using DataLayer.Data;
-using DataLayer.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using WebApi.Data;
 using WebApi.Interfaces;
+using WebApi.Models;
 
 namespace WebApi.Repositories;
 

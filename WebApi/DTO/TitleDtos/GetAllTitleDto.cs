@@ -1,4 +1,4 @@
-﻿using DataLayer.Models;
+﻿using WebApi.Models;
 
 namespace WebApi.DTO.TitleDtos;
 
