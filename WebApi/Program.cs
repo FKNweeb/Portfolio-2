@@ -1,4 +1,9 @@
+using DataLayer.Data;
+
 using Mapster;
+using Microsoft.EntityFrameworkCore;
+using WebApi.Interfaces;
+using WebApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,9 +11,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMapster();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddDbContext<ImdbContext>(
+    options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMvcCore();
+
+builder.Services.AddScoped<ITitlteRepository, TitleRepository>();
+
 
 var app = builder.Build();
 
@@ -19,6 +32,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseRouting();
 app.UseHttpsRedirection();
 
 //app.UseAuthorization();
