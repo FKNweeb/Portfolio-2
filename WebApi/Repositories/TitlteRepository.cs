@@ -18,6 +18,11 @@ public class TitleRepository : ITitlteRepository
 
     public async Task<List<Title>> GetAllAsync()
     { 
-        return await _context.Titles.Include(a => a.TitleKnownAs).ToListAsync();
+        return await _context.Titles.Include(a => a.TitleKnownAs).Include(t => t.TitlePlot).ToListAsync();
+    }
+
+    public async Task<List<Title>> GetAllTitleAndPlotAsync()
+    {
+        return await _context.Titles.ToListAsync();
     }
 }

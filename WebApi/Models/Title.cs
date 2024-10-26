@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
@@ -29,5 +30,9 @@ public class Title
 
 
     public List<TitleKnowAs?> TitleKnownAs { get; set; }
+
+    public TitlePlot? TitlePlot { get; set; }
+
+   
 
 }

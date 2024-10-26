@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Interfaces;
 using WebApi.Mappers;
+using WebApi.Models;
 
 namespace WebApi.Controllers;
 
@@ -29,12 +30,26 @@ public class TitleController : ControllerBase
         return Ok(titlesDto);
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetTitleById([FromRoute] string id )
-    {
-        var title = _context.Titles.Include(k => k.TitleKnownAs).FirstOrDefault(t => t.TitleId == id);
-        if(title == null) return NotFound();
+    //[HttpGet("{id}")]
+    //public IActionResult GetTitleById([FromRoute] string id )
+    //{
+    //    var title = _context.Titles.Include(k => k.TitleKnownAs).FirstOrDefault(t => t.TitleId == id);
+    //    if(title == null) return NotFound();
 
-        return Ok(title);
+    //    return Ok(title);
+    //}
+
+    [HttpGet]
+    [Route("plots")]
+    public async Task<IActionResult> GetTitleAndPlot()
+    {
+        var titles = await _context.TitlePlots.Include(t=> t.Title).ToListAsync();
+            
+        if (titles == null) { return NotFound(); }
+
+        
+        return  Ok(titles);
+
+
     }
 }
