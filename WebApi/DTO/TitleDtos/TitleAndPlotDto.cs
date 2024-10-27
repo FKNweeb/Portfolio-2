@@ -2,7 +2,7 @@
 
 namespace WebApi.DTO.TitleDtos;
 
-public class GetAllTitleDto
+public class TitleAndPlotDto
 { 
     public string PrimaryTitle { get; set; }
 

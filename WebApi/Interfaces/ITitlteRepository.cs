@@ -1,10 +1,11 @@
-﻿using WebApi.Models;
+﻿using WebApi.Models.TitleRelatedModels;
 
 namespace WebApi.Interfaces;
 
 public interface ITitlteRepository
 {
-    Task<List<Title>> GetAllAsync();
+    int NumberOfTitles();
+    Task<List<Title>> GetAllAsync(int page, int pageSize);
 
     Task<List<Title>> GetAllTitleAndPlotAsync();
 }

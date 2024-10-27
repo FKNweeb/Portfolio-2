@@ -1,55 +1,48 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
+using WebApi.DTO.TitleDtos;
 using WebApi.Interfaces;
 using WebApi.Mappers;
-using WebApi.Models;
+using WebApi.Models.TitleRelatedModels;
 
 namespace WebApi.Controllers;
 
 [ApiController]
 [Route("api/titles")]
-public class TitleController : ControllerBase
+public class TitleController : BaseController
 {
     private readonly ImdbContext _context;
     private readonly ITitlteRepository _titleRepo;
+    private readonly LinkGenerator _linkGenerator;
 
-    public TitleController(ImdbContext imdb, ITitlteRepository titleRepo)
+    public TitleController(ImdbContext imdb, ITitlteRepository titleRepo, LinkGenerator linkGenerator) : base(linkGenerator)
     {
         _context = imdb;
         _titleRepo = titleRepo;
+        _linkGenerator = linkGenerator;
+
     }
 
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllTitles()
+    [HttpGet(Name = nameof(GetAllTitles))]
+    public async Task<IActionResult> GetAllTitles(int page =0, int pageSize= 25)
     {
-        var titles = await _titleRepo.GetAllAsync();
-        var titlesDto = titles.Select(s => s.ToGetAllTitleDto());
-
-        return Ok(titlesDto);
-    }
-
-    //[HttpGet("{id}")]
-    //public IActionResult GetTitleById([FromRoute] string id )
-    //{
-    //    var title = _context.Titles.Include(k => k.TitleKnownAs).FirstOrDefault(t => t.TitleId == id);
-    //    if(title == null) return NotFound();
-
-    //    return Ok(title);
-    //}
-
-    [HttpGet]
-    [Route("plots")]
-    public async Task<IActionResult> GetTitleAndPlot()
-    {
-        var titles = await _context.TitlePlots.Include(t=> t.Title).ToListAsync();
-            
-        if (titles == null) { return NotFound(); }
+        var titles = await _titleRepo.GetAllAsync(page, pageSize);
+        var total = _titleRepo.NumberOfTitles();
+        var titlesDto = titles.Select(s => s.ToTitleAndPlotDto());
 
         
-        return  Ok(titles);
-
-
+        object result = CreatePaging(
+            nameof(GetAllTitles),
+            page,
+            pageSize,
+            total,
+            titlesDto
+            );
+        return Ok(result);
     }
+
+    
+
 }

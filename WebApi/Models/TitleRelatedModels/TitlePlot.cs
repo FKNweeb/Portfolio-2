@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebApi.Models;
+namespace WebApi.Models.TitleRelatedModels;
 
 
 [Table("title_plot")]
@@ -16,9 +16,9 @@ public class TitlePlot
     [Column("plot")]
     public string Plot { get; set; } = string.Empty;
 
-    
+
     public Title? Title { get; set; }
 
 }
-  
-    
+
+

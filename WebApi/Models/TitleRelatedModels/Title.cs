@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace WebApi.Models;
+namespace WebApi.Models.TitleRelatedModels;
 
 [Table("title")]
 public class Title
@@ -33,6 +33,6 @@ public class Title
 
     public TitlePlot? TitlePlot { get; set; }
 
-   
+    public IList<TitleGenre> TitleGenres { get; set; }
 
 }

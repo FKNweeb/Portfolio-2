@@ -1,13 +1,13 @@
 ﻿using System.Runtime.CompilerServices;
 using WebApi.DTO.TitleDtos;
-using WebApi.Models;
+using WebApi.Models.TitleRelatedModels;
 namespace WebApi.Mappers;
 
 public static class TitleMapper
 {
-    public static GetAllTitleDto ToGetAllTitleDto(this Title titleObject)
+    public static TitleAndPlotDto ToTitleAndPlotDto(this Title titleObject)
     {
-        return new GetAllTitleDto
+        return new TitleAndPlotDto
         {
             PrimaryTitle = titleObject.PrimaryTitle,
             Plot = titleObject.TitlePlot?.Plot.ToString(),
@@ -15,13 +15,5 @@ public static class TitleMapper
         };
     }
 
-    public static GetTitleAndPlotDto ToTitleAndPlotDto(this Title titleObject)
-    {
-        return new GetTitleAndPlotDto
-        {
-            PrimaryTitle = titleObject.PrimaryTitle,
-            TitlePlot = titleObject.TitlePlot,
 
-        };
-    }
 }
