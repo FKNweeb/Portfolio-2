@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Interfaces;
 using WebApi.Models.TitleRelatedModels;
+using WebApi.DTO.TitleDtos;
 
 namespace WebApi.Repositories;
 
@@ -24,9 +25,8 @@ public class TitleRepository : ITitlteRepository
     /// <returns>A task that represent the asynchronus operation. The 
     /// task result contains a list of objects.</returns>
     public async Task<List<Title>> GetAllAsync(int page, int pageSize)
-    { 
+    {
         return await _context.Titles
-            .Include(a => a.TitleKnownAs)
             .Include(t => t.TitlePlot)
             .Where(t => t.TitlePlot != null)
             .Skip(page * pageSize)
@@ -34,13 +34,28 @@ public class TitleRepository : ITitlteRepository
             .ToListAsync();
     }
 
-    public async Task<List<Title>> GetAllTitleAndPlotAsync()
-    {
-        return await _context.Titles.ToListAsync();
-    }
+  
 
     public int NumberOfTitles()
     {
         return _context.Titles.Count();
+    }
+
+
+    /// <summary>
+    /// Retrives titles that match the start year
+    /// </summary>
+    /// <param name="startyear"></param>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    public async Task<List<Title>> GetAllTitlesByDate(string startyear, int page, int pageSize)
+    {
+        return await _context.Titles
+            .Include(t=> t.TitleDate)
+            .Where(t=> t.TitleDate.StartYear == startyear)
+            .Skip(page)
+            .Take(pageSize)
+            .ToListAsync();
     }
 }

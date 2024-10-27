@@ -12,13 +12,11 @@ namespace WebApi.Controllers;
 [Route("api/titles")]
 public class TitleController : BaseController
 {
-    private readonly ImdbContext _context;
     private readonly ITitlteRepository _titleRepo;
     private readonly LinkGenerator _linkGenerator;
 
-    public TitleController(ImdbContext imdb, ITitlteRepository titleRepo, LinkGenerator linkGenerator) : base(linkGenerator)
+    public TitleController(ITitlteRepository titleRepo, LinkGenerator linkGenerator) : base(linkGenerator)
     {
-        _context = imdb;
         _titleRepo = titleRepo;
         _linkGenerator = linkGenerator;
 
@@ -26,13 +24,13 @@ public class TitleController : BaseController
 
 
     [HttpGet(Name = nameof(GetAllTitles))]
-    public async Task<IActionResult> GetAllTitles(int page =0, int pageSize= 25)
+    public async Task<IActionResult> GetAllTitles(int page = 0, int pageSize = 25)
     {
         var titles = await _titleRepo.GetAllAsync(page, pageSize);
         var total = _titleRepo.NumberOfTitles();
         var titlesDto = titles.Select(s => s.ToTitleAndPlotDto());
 
-        
+
         object result = CreatePaging(
             nameof(GetAllTitles),
             page,
@@ -43,6 +41,20 @@ public class TitleController : BaseController
         return Ok(result);
     }
 
-    
+
+    [HttpGet("{startyear}", Name = nameof(GetAllTitlesByDate))]
+    public async Task<ActionResult> GetAllTitlesByDate([FromRoute] string startyear, int page =0 , int pageSize=25)
+    {
+        var titles = await _titleRepo.GetAllTitlesByDate(startyear, page, pageSize);
+        
+        var total = _titleRepo.NumberOfTitles();
+        
+        var titlesDto = titles.Select(s=>s.ToTitleAndDateDto());
+
+        
+        return Ok(titlesDto);
+    }
+
+
 
 }

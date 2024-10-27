@@ -7,5 +7,7 @@ public interface ITitlteRepository
     int NumberOfTitles();
     Task<List<Title>> GetAllAsync(int page, int pageSize);
 
-    Task<List<Title>> GetAllTitleAndPlotAsync();
+    Task<List<Title>> GetAllTitlesByDate(string startyear, int page, int pageSize);
+
+
 }

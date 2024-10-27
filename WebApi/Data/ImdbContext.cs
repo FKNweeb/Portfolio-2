@@ -25,6 +25,13 @@ public class ImdbContext : DbContext
             .HasOne(tg => tg.Genre)
             .WithMany(g => g.TitleGenres)
             .HasForeignKey(tg => tg.GenreName);
+
+        modelBuilder.Entity<Title>()
+            .HasOne(t => t.TitleDate)
+            .WithOne(td => td.Title)
+            .HasForeignKey<TitleDate>(td=> td.TitleId);
+
+       
             
     }
     public DbSet<Title> Titles { get; set; }
@@ -36,4 +43,6 @@ public class ImdbContext : DbContext
     public DbSet<Genre> Genres { get; set; }
 
     public DbSet<TitleGenre> TitleGenres { get; set; }
+
+    public DbSet<TitleDate> TitleDates { get; set; }
 }
