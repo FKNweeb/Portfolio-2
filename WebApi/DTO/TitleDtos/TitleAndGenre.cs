@@ -1,6 +1,6 @@
 ﻿namespace WebApi.DTO.TitleDtos;
 
-public class TitleAndGenra
+public class TitleAndGenreDTO
 {
     public string PrimaryTitle { get; set; }
 
