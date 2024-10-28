@@ -31,15 +31,15 @@ public class ImdbContext : DbContext
             .WithOne(td => td.Title)
             .HasForeignKey<TitleDate>(td=> td.TitleId);
 
-       modelBuilder.Entity<KnownForTitle>()
-            .HasOne(t => t.Title)
-            .WithMany(kft => kft.KnownForTitles)
-            .HasForeignKey(t => t.TitleId);
+       //modelBuilder.Entity<KnownForTitle>()
+       //     .HasOne(t => t.Title)
+       //     .WithMany(kft => kft.KnownForTitles)
+       //     .HasForeignKey(t => t.TitleId);
 
-        modelBuilder.Entity<KnownForTitle>()
-            .HasOne(kft => kft.Name)
-            .WithMany(n => n.KnownForTitles)
-            .HasForeignKey(kft => kft.NameId);
+       // modelBuilder.Entity<KnownForTitle>()
+       //     .HasOne(kft => kft.Name)
+       //     .WithMany(n => n.KnownForTitles)
+       //     .HasForeignKey(kft => kft.NameId);
 
 
         //Map Title to TitleIsTypes 
@@ -60,10 +60,21 @@ public class ImdbContext : DbContext
             .WithOne(t => t.Title)
             .HasForeignKey<TitlePoster>(t => t.TitleId);
 
-       
 
-       
-            
+
+        modelBuilder.Entity<WordIndex>()
+             .HasOne(t => t.Title)
+             .WithMany(t => t.WordIndexes)
+             .HasForeignKey(t => t.TitleId);
+
+        modelBuilder.Entity<Title>()
+            .HasMany(t => t.WordIndexes)
+            .WithOne(wi => wi.Title)
+            .HasForeignKey(wi => wi.TitleId);
+
+
+
+
     }
     public DbSet<Title> Titles { get; set; }
     

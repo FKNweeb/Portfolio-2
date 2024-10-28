@@ -1,4 +1,5 @@
-﻿using WebApi.Models.TitleRelatedModels;
+﻿using WebApi.Models;
+using WebApi.Models.TitleRelatedModels;
 
 namespace WebApi.Interfaces;
 
@@ -13,5 +14,5 @@ public interface ITitlteRepository
 
     Task<List<Title>> GetAllTitlesWithPoster(int page, int pageSize);
 
-
+    Task<List<Title>> GetTitleAndWordIndex(string title, int page, int pageSize);
 }

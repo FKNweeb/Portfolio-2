@@ -88,4 +88,20 @@ public class TitleController : BaseController
         return Ok(result);
     }
 
+    [HttpGet("wordindex/{id}", Name = nameof(GetWordIndex))]
+    public async Task<IActionResult> GetWordIndex(string id, int page = 0, int pageSize = 25)
+    {
+        var titles = await _titleRepo.GetTitleAndWordIndex(id, page, pageSize);
+        var total = _titleRepo.NumberOfTitles();
+
+        object result = CreatePaging(
+            nameof(GetWordIndex),
+            page,
+            pageSize,
+            total,
+            titles
+            );
+        return Ok(result);
+    }
+
 }

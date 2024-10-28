@@ -5,6 +5,7 @@ using WebApi.Data;
 using WebApi.Interfaces;
 using WebApi.Models.TitleRelatedModels;
 using WebApi.DTO.TitleDtos;
+using WebApi.Models;
 
 namespace WebApi.Repositories;
 
@@ -77,6 +78,17 @@ public class TitleRepository : ITitlteRepository
             .Where(t=>t.TitlePoster != null)
             .Skip(page * pageSize)
             .Take (pageSize)
+            .ToListAsync();
+    }
+
+    public async Task<List<Title>> GetTitleAndWordIndex(string title, int page, int pageSize)
+    {
+
+        return await _context.Titles
+            .Where (t=>t.WordIndexes.Any() && t.TitleId == title)
+            .Include(t=>t.WordIndexes)
+            .Skip(page * pageSize)
+            .Take(pageSize)
             .ToListAsync();
     }
 }
