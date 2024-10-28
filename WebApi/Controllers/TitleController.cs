@@ -72,6 +72,20 @@ public class TitleController : BaseController
         return Ok(result);
     }
 
+    [HttpGet("posters", Name =nameof(GetTitlesAndPosters))]
+    public async Task<IActionResult> GetTitlesAndPosters(int page=0, int pageSize =25)
+    {
+        var titles = await _titleRepo.GetAllTitlesWithPoster(page, pageSize);
+        var total = _titleRepo.NumberOfTitles();
 
+        object result = CreatePaging(
+            nameof(GetTitlesAndPosters),
+            page,
+            pageSize,
+            total,
+            titles
+            );
+        return Ok(result);
+    }
 
 }

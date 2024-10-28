@@ -69,4 +69,14 @@ public class TitleRepository : ITitlteRepository
             .Take(pageSize)
             .ToListAsync();
     }
+
+    public async Task<List<Title>> GetAllTitlesWithPoster(int page, int pageSize)
+    {
+        return await _context.Titles
+            .Include(t=>t.TitlePoster)
+            .Where(t=>t.TitlePoster != null)
+            .Skip(page * pageSize)
+            .Take (pageSize)
+            .ToListAsync();
+    }
 }

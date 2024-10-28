@@ -31,6 +31,20 @@ public class ImdbContext : DbContext
             .WithOne(td => td.Title)
             .HasForeignKey<TitleDate>(td=> td.TitleId);
 
+<<<<<<< Updated upstream
+=======
+       modelBuilder.Entity<KnownForTitle>()
+            .HasOne(t => t.Title)
+            .WithMany(kft => kft.KnownForTitles)
+            .HasForeignKey(t => t.TitleId);
+
+        modelBuilder.Entity<KnownForTitle>()
+            .HasOne(kft => kft.Name)
+            .WithMany(n => n.KnownForTitles)
+            .HasForeignKey(kft => kft.NameId);
+
+
+>>>>>>> Stashed changes
         //Map Title to TitleIsTypes 
         modelBuilder.Entity<TitleIsType>()
             .HasOne(t=>t.Title)
@@ -42,6 +56,12 @@ public class ImdbContext : DbContext
             .HasOne(t => t.TitleType)
             .WithOne(t => t.TitleIsType)
             .HasForeignKey<TitleIsType>(td => td.TypeOfTitle);
+
+        //Map Title and TitlePoster
+        modelBuilder.Entity<Title>()
+            .HasOne(tp => tp.TitlePoster)
+            .WithOne(t => t.Title)
+            .HasForeignKey<TitlePoster>(t => t.TitleId);
 
        
             
@@ -62,4 +82,6 @@ public class ImdbContext : DbContext
     public DbSet<TitleType> TitleTypes { get; set; }   
 
     public DbSet<TitleIsType> TitleIsTypes{ get; set; }
+
+    public DbSet<TitlePoster> TitlePosters { get; set; }
 }

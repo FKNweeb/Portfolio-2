@@ -39,4 +39,6 @@ public class Title
 
     public TitleIsType? TitleIsType { get; set; }
 
+    public TitlePoster? TitlePoster { get; set; }
+
 }
