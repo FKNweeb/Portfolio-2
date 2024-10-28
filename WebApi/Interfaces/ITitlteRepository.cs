@@ -9,5 +9,7 @@ public interface ITitlteRepository
 
     Task<List<Title>> GetAllTitlesByDate(string startyear, int page, int pageSize);
 
+    Task<List<Title>> GetAllTitlesByType(int page, int pageSize);
+
 
 }

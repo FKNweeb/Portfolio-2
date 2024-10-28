@@ -9,8 +9,10 @@ public static class TitleMapper
         return new TitleAndPlotDto
         {
             PrimaryTitle = titleObject.PrimaryTitle,
-            Plot = titleObject.TitlePlot?.Plot.ToString()
-           
+            Plot = titleObject.TitlePlot?.Plot.ToString(),
+            StartDate = titleObject.TitleDate?.StartYear.ToString(),
+            EndDate = titleObject.TitleDate?.EndYear.ToString()
+
         };
     }
 

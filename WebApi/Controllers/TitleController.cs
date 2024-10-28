@@ -55,6 +55,23 @@ public class TitleController : BaseController
         return Ok(titlesDto);
     }
 
+    [HttpGet("type", Name = nameof(GetTitlesByType))]
+    public async Task<IActionResult> GetTitlesByType(int page=0, int pageSize=25)
+    {
+        var titles = await _titleRepo.GetAllTitlesByType(page, pageSize);
+
+        var total = _titleRepo.NumberOfTitles();
+
+        object result = CreatePaging(
+            nameof(GetTitlesByType),
+            page,
+            pageSize,
+            total,
+            titles
+            );
+        return Ok(result);
+    }
+
 
 
 }
