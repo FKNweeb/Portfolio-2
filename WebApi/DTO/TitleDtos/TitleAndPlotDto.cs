@@ -9,6 +9,4 @@ public class TitleAndPlotDto
 
     public string Plot { get; set; }
 
-    
-
 }

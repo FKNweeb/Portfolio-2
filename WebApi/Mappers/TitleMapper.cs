@@ -9,19 +9,18 @@ public static class TitleMapper
         return new TitleAndPlotDto
         {
             PrimaryTitle = titleObject.PrimaryTitle,
-            Plot = titleObject.TitlePlot?.Plot.ToString(),
+            Plot = titleObject.TitlePlot?.Plot.ToString()
            
         };
     }
 
-    public static TitleAndGenra ToTitleAndGenreDto(this Title titleObject)
+    public static TitleAndGenre ToTitleAndGenreDto(this Title titleObject)
     {
-        return new TitleAndGenra
+        return new TitleAndGenre
         {
             PrimaryTitle = titleObject.PrimaryTitle,
             Plot = titleObject.TitlePlot?.Plot.ToString(),
             Genre = titleObject.TitleGenres.Select(tg => tg.Genre.GenreName).ToList()
-
         };
     }
 
@@ -31,7 +30,7 @@ public static class TitleMapper
         {
             PrimaryTitle = titleObject.PrimaryTitle,
             StartDate = titleObject.TitleDate?.StartYear.ToString(),
-            EndDate  =titleObject.TitleDate?.EndYear.ToString(),
+            EndDate  =titleObject.TitleDate?.EndYear.ToString()
         };
     }
 }
