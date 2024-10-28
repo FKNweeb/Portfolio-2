@@ -41,4 +41,6 @@ public class Title
 
     public TitlePoster? TitlePoster { get; set; }
 
+    public IList<WordIndex?> WordIndexes { get; set; }
+
 }
