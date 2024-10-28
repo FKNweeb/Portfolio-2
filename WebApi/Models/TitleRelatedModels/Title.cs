@@ -29,7 +29,7 @@ public class Title
     public int? NumberOfVotes { get; set; }
 
 
-    public List<TitleKnowAs?> TitleKnownAs { get; set; }
+    public List<TitleKnownAs?> TitleKnownAs { get; set; }
 
     public TitlePlot? TitlePlot { get; set; }
 
@@ -37,5 +37,7 @@ public class Title
 
     public TitleDate? TitleDate { get; set; }
     public IList<KnownForTitle> KnownForTitles { get; set; }
+
+    public TitleIsType? TitleIsType { get; set; }
 
 }

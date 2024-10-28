@@ -9,4 +9,7 @@ public class TitleAndPlotDto
 
     public string Plot { get; set; }
 
+    public string StartDate { get; set; }
+    public string EndDate { get; set; }
+
 }

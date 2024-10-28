@@ -7,7 +7,7 @@ namespace WebApi.Models.TitleRelatedModels;
 
 [Table("akas")]
 [PrimaryKey(nameof(TitleId), nameof(OrderingAkas))]
-public class TitleKnowAs
+public class TitleKnownAs
 {
     [Column("akas_id")]
     [Required]

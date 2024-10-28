@@ -28,6 +28,7 @@ public class TitleRepository : ITitlteRepository
     {
         return await _context.Titles
             .Include(t => t.TitlePlot)
+            .Include(d=>d.TitleDate)
             .Where(t => t.TitlePlot != null)
             .Skip(page * pageSize)
             .Take(pageSize)
@@ -54,7 +55,17 @@ public class TitleRepository : ITitlteRepository
         return await _context.Titles
             .Include(t=> t.TitleDate)
             .Where(t=> t.TitleDate.StartYear == startyear)
-            .Skip(page)
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
+
+    public async Task<List<Title>> GetAllTitlesByType(int page, int pageSize)
+    {
+        return await _context.Titles
+            .Include(t=> t.TitleIsType)
+            .ThenInclude(t=> t.TitleType)
+            .Skip(page * pageSize)
             .Take(pageSize)
             .ToListAsync();
     }
