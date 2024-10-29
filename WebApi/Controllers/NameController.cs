@@ -54,10 +54,11 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetNameAndProfession", Name =(nameof(GetNameAndProfession)))]
+        [HttpGet("profession", Name =(nameof(GetNameAndProfession)))]
         public async Task<IActionResult> GetNameAndProfession(int page = 0, int pageSize = 25){
             var kft = await _nameRepo.GetNameAndProfessionAsync(page, pageSize);
-            var total = _context.Names.Count();
+            var total = _nameRepo.NumberOfName();
+            
             object result = CreatePaging(
                 nameof(GetNameAndProfession),
                 page,

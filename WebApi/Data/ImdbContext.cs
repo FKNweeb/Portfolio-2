@@ -32,6 +32,18 @@ public class ImdbContext : DbContext
             .WithOne(td => td.Title)
             .HasForeignKey<TitleDate>(td=> td.TitleId);
 
+        //Name and KnowForTitles
+        modelBuilder.Entity<Name>()
+            .HasMany(e => e.KnownForTitles)
+            .WithOne(e => e.Name)
+            .HasForeignKey(e => e.NameId);
+
+        modelBuilder.Entity<Title>()
+            .HasMany(e=>e.KnownForTitles)
+            .WithOne(e=>e.Title)
+            .HasForeignKey(e => e.TitleId);
+
+
         modelBuilder.Entity<KnownForTitle>()
             .HasOne(kft => kft.Title)
             .WithMany(t => t.KnownForTitles)
