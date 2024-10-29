@@ -61,7 +61,7 @@ public class ImdbContext : DbContext
             .HasForeignKey<TitlePoster>(t => t.TitleId);
 
 
-
+        //Map Title and WordIndex
         modelBuilder.Entity<WordIndex>()
              .HasOne(t => t.Title)
              .WithMany(t => t.WordIndexes)
@@ -72,6 +72,12 @@ public class ImdbContext : DbContext
             .WithOne(wi => wi.Title)
             .HasForeignKey(wi => wi.TitleId);
 
+
+        //Map TitleKnowAs And Language
+        modelBuilder.Entity<Language>()
+            .HasOne(l => l.TitleKnownAs)
+            .WithMany(l => l.Languages)
+            .HasForeignKey(l => new {l.TitleId,  l.OrderingAkas});
 
 
 
@@ -96,4 +102,6 @@ public class ImdbContext : DbContext
     public DbSet<TitlePoster> TitlePosters { get; set; }
 
     public DbSet<WordIndex> WordIndexes { get; set; }
+
+    public DbSet<Language> Languages { get; set; }
 }

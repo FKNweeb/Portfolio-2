@@ -27,4 +27,6 @@ public class TitleKnownAs
     public string Type { get; set; } = string.Empty;
 
     public Title? Title { get; set; }
+
+    public IList<Languages?> Languages { get; set; }
 }
