@@ -10,9 +10,11 @@ namespace WebApi.Models.NameRelatedModels;
 public class CrewCharacter
 {
     [Column("tconst")]
+    [ForeignKey(nameof(Title))]
     public string TitleId { get; set; }
 
     [Column("nconst")]
+    [ForeignKey(nameof(Name))]
     public string NameId { get; set; }
 
     [Column("character_description")]

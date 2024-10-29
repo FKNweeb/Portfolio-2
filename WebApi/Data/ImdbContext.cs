@@ -101,28 +101,6 @@ public class ImdbContext : DbContext
             .HasOne(p => p.Profession)
             .WithMany(p => p.ProfessionNames)
             .HasForeignKey(p => p.ProfessionTitle);
-
-        // Map CrewCharacter
-        // modelBuilder.Entity<CrewCharacter>()
-        //     .HasOne(cc => cc.Title)
-        //     .WithMany(t => t.CrewCharacters)
-        //     .HasForeignKey(cc => cc.TitleId);
-
-        // modelBuilder.Entity<CrewCharacter>()
-        //     .HasOne(cc => cc.Name)
-        //     .WithMany(n => n.CrewCharacters)
-        //     .HasForeignKey(cc => cc.NameId);
-
-        modelBuilder.Entity<Name>()
-            .HasMany(e => e.CrewCharacters)
-            .WithOne(e => e.Name)
-            .HasForeignKey(e => e.NameId);
-        
-        modelBuilder.Entity<Title>()
-            .HasMany(t => t.CrewCharacters)
-            .WithOne(cc => cc.Title)
-            .HasForeignKey(t => t.TitleId);
-
     }
     public DbSet<Title> Titles { get; set; }
     
