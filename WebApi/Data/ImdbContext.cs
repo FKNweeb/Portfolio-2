@@ -54,7 +54,7 @@ public class ImdbContext : DbContext
             .WithMany(n => n.KnownForTitles)
             .HasForeignKey(kft => kft.NameId);
 
-        //Map Title to TitleIsTypes 
+        //Map Title to TitleIsTypes
         modelBuilder.Entity<TitleIsType>()
             .HasOne(t=>t.Title)
             .WithOne(t=>t.TitleIsType)
@@ -103,7 +103,7 @@ public class ImdbContext : DbContext
             .WithOne(t => t.TitleKnownAs)
             .HasForeignKey<Region>(e => new { e.RegionId, e.RegionOrdering });
 
-        
+
 
         // Map ProfessionName and Professions
         modelBuilder.Entity<ProfessionName>()
@@ -117,7 +117,7 @@ public class ImdbContext : DbContext
             .HasForeignKey(p => p.ProfessionTitle);
     }
     public DbSet<Title> Titles { get; set; }
-    
+
     public DbSet<TitleKnownAs> KnowAs { get; set; }
 
     public DbSet<TitlePlot> TitlePlots { get; set; }
@@ -130,7 +130,7 @@ public class ImdbContext : DbContext
     public DbSet<TitleDate> TitleDates { get; set; }
     public DbSet<KnownForTitle> KnownForTitles { get; set; }
 
-    public DbSet<TitleType> TitleTypes { get; set; }   
+    public DbSet<TitleType> TitleTypes { get; set; }
 
     public DbSet<TitleIsType> TitleIsTypes{ get; set; }
 
@@ -144,4 +144,5 @@ public class ImdbContext : DbContext
     public DbSet<CrewCharacter> CrewCharacters { get; set; }
 
     public DbSet<Region> Regions { get; set; }
+    public DbSet<Crew> Crews { get; set; }
 }

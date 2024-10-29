@@ -31,7 +31,7 @@ namespace WebApi.Controllers
 
             return Ok(titlesDto);
         }
-        
+
         [HttpGet("{id}")]
         public IActionResult GetNameById([FromRoute] string id )
         {
@@ -58,7 +58,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> GetNameAndProfession(int page = 0, int pageSize = 25){
             var kft = await _nameRepo.GetNameAndProfessionAsync(page, pageSize);
             var total = _nameRepo.NumberOfName();
-            
+
             object result = CreatePaging(
                 nameof(GetNameAndProfession),
                 page,
@@ -73,9 +73,17 @@ namespace WebApi.Controllers
         public async Task<IActionResult> GetNameAndCrewCharacter(int page = 0, int pageSize = 25){
             var kft = await _nameRepo.GetNameAndCrewCharacterAsync(page, pageSize);
             var total = _nameRepo.NumberOfName();
-            
+
             object result = CreatePaging(
                 nameof(GetNameAndCrewCharacter),
+        [HttpGet("crew", Name = (nameof(GetNameAndCrew)))]
+        public async Task<IActionResult> GetNameAndCrew(int page = 0, int pageSize = 25)
+        {
+            var kft = await _nameRepo.GetNameAndCrewAsync(page, pageSize);
+            var total = _nameRepo.NumberOfName();
+
+            object result = CreatePaging(
+                nameof(GetNameAndCrew),
                 page,
                 pageSize,
                 total,

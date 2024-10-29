@@ -40,6 +40,15 @@ public class NameRepository : INameRepository
             .Take(pageSize)
             .ToListAsync();
     }
+    public async Task<List<Name>> GetNameAndCrewAsync(int page, int pageSize)
+    {
+        return await _context.Names
+            .Include(n => n.Crews)
+            .ThenInclude(c => c.Title)
+            .Skip (page * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
 
     public async Task<List<Name>> GetNameAndCrewCharacterAsync(int page, int pageSize){
         return await _context.Names

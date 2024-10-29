@@ -44,6 +44,9 @@ public class Title
     public TitlePoster? TitlePoster { get; set; }
 
     public IList<WordIndex?> WordIndexes { get; set; }
-    
+
     public IList<CrewCharacter> CrewCharacters { get; set; }
+
+    public IList<Crew?> Crews { get; set; }
+
 }
