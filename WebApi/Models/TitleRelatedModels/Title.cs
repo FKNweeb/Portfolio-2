@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebApi.Models.NameRelatedModels;
 
 
 namespace WebApi.Models.TitleRelatedModels;
@@ -43,5 +44,6 @@ public class Title
     public TitlePoster? TitlePoster { get; set; }
 
     public IList<WordIndex?> WordIndexes { get; set; }
-
+    
+    public IList<CrewCharacter> CrewCharacters { get; set; }
 }
