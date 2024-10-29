@@ -92,41 +92,46 @@ public class TitleRepository : ITitlteRepository
             .ToListAsync();
     }
 
-    public async Task<List<Title>> GetTilteByLanguage(int page, int pageSize)
+    public async Task<List<TitleKnownAs>> GetTilteByLanguage(int page, int pageSize)
     {
-        //return await  _context.Titles
-        //    .Include(t => t.TitleKnownAs)
+
+
+        return await _context.KnowAs
+            .Include(t => t.Title)
+            .Include(t => t.Language)
+            .Include(t => t.Region)
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+
+        //    return await _context.Titles
+        //    .Select(t => new Title
+        //    {
+        //        TitleId = t.TitleId,
+        //        PrimaryTitle = t.PrimaryTitle,
+        //        OriginalTitle = t.OriginalTitle,
+        //        RuntimeMinutes = t.RuntimeMinutes,
+        //        AverageRating = t.AverageRating,
+        //        NumberOfVotes = t.NumberOfVotes,
+        //        TitleKnownAs = t.TitleKnownAs
+        //            .Select(tka => new TitleKnownAs
+        //            {
+        //                TitleId = tka.TitleId,
+        //                OrderingAkas = tka.OrderingAkas,
+        //                KnownAsTitle = tka.KnownAsTitle,
+        //                Type = tka.Type,
+        //                Language = tka.Language,
+        //                Region = tka.Region
+
+        //            })
+
+        //            .ToList()
+        //    })
         //    .Skip(page * pageSize)
         //    .Take(pageSize)
         //    .ToListAsync();
 
-
-        return await _context.Titles
-        .Select(t => new Title
-        {
-            TitleId = t.TitleId,
-            PrimaryTitle = t.PrimaryTitle,
-            OriginalTitle = t.OriginalTitle,
-            RuntimeMinutes = t.RuntimeMinutes,
-            AverageRating = t.AverageRating,
-            NumberOfVotes = t.NumberOfVotes,
-            TitleKnownAs = t.TitleKnownAs
-                .Select(tka=> new TitleKnownAs
-                {
-                    TitleId = tka.TitleId,
-                    OrderingAkas = tka.OrderingAkas,
-                    KnownAsTitle = tka.KnownAsTitle,
-                    Type = tka.Type,
-                    Language = tka.Language,
-                    Region = tka.Region
-                   
-                })
-
-                .ToList()
-        })
-        .Skip(page * pageSize)
-        .Take(pageSize)
-        .ToListAsync();
-
+        //}
     }
 }
