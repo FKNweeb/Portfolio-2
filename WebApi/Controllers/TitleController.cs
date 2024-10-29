@@ -104,4 +104,21 @@ public class TitleController : BaseController
         return Ok(result);
     }
 
+    [HttpGet("language/{id}")]
+    public async Task<IActionResult> GetTitlesByLnaguage(string id, int page=0, int pageSize=25)
+    {
+        var titles = await _titleRepo.GetTilteByLanguage(id, page, pageSize);
+        var total = _titleRepo.NumberOfTitles();
+
+        object result = CreatePaging(
+           nameof(GetTitlesByLnaguage),
+           page,
+           pageSize,
+           total,
+           titles
+           );
+        return Ok(result);
+
+    }
+
 }
