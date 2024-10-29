@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using WebApi.Models.NameRelatedModels;
 
 namespace WebApi.Models.TitleRelatedModels;
 

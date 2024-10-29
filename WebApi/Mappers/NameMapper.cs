@@ -1,5 +1,5 @@
 using WebApi.DTO.NameDtos;
-using WebApi.Models;
+using WebApi.Models.NameRelatedModels;
 
 namespace WebApi.Mappers;
 
