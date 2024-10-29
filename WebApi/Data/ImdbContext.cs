@@ -108,7 +108,6 @@ public class ImdbContext : DbContext
             .HasOne(p => p.Profession)
             .WithMany(p => p.ProfessionNames)
             .HasForeignKey(p => p.ProfessionTitle);
-
     }
     public DbSet<Title> Titles { get; set; }
     
@@ -135,4 +134,5 @@ public class ImdbContext : DbContext
     public DbSet<Language> Languages { get; set; }
     public DbSet<ProfessionName> ProfessionNames { get; set; }
     public DbSet<Profession> Professions { get; set; }
+    public DbSet<CrewCharacter> CrewCharacters { get; set; }
 }

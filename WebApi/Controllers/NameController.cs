@@ -68,5 +68,20 @@ namespace WebApi.Controllers
             );
             return Ok(result);
         }
+
+        [HttpGet("crewcharacter", Name =(nameof(GetNameAndCrewCharacter)))]
+        public async Task<IActionResult> GetNameAndCrewCharacter(int page = 0, int pageSize = 25){
+            var kft = await _nameRepo.GetNameAndCrewCharacterAsync(page, pageSize);
+            var total = _nameRepo.NumberOfName();
+            
+            object result = CreatePaging(
+                nameof(GetNameAndCrewCharacter),
+                page,
+                pageSize,
+                total,
+                kft
+            );
+            return Ok(result);
+        }
     }
 }
