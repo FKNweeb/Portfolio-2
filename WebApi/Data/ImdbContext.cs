@@ -31,17 +31,15 @@ public class ImdbContext : DbContext
             .WithOne(td => td.Title)
             .HasForeignKey<TitleDate>(td=> td.TitleId);
 
-       //modelBuilder.Entity<KnownForTitle>()
-       //     .HasOne(t => t.Title)
-       //     .WithMany(kft => kft.KnownForTitles)
-       //     .HasForeignKey(t => t.TitleId);
+       modelBuilder.Entity<KnownForTitle>()
+            .HasOne(t => t.Title)
+            .WithMany(kft => kft.KnownForTitles)
+            .HasForeignKey(t => t.TitleId);
 
-       // modelBuilder.Entity<KnownForTitle>()
-       //     .HasOne(kft => kft.Name)
-       //     .WithMany(n => n.KnownForTitles)
-       //     .HasForeignKey(kft => kft.NameId);
-
-
+        modelBuilder.Entity<KnownForTitle>()
+            .HasOne(kft => kft.Name)
+            .WithMany(n => n.KnownForTitles)
+            .HasForeignKey(kft => kft.NameId);
         //Map Title to TitleIsTypes 
         modelBuilder.Entity<TitleIsType>()
             .HasOne(t=>t.Title)
@@ -94,6 +92,7 @@ public class ImdbContext : DbContext
     public DbSet<TitleGenre> TitleGenres { get; set; }
 
     public DbSet<TitleDate> TitleDates { get; set; }
+    public DbSet<KnownForTitle> KnownForTitles { get; set; }
 
     public DbSet<TitleType> TitleTypes { get; set; }   
 

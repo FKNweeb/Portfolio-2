@@ -36,6 +36,7 @@ public class Title
     public IList<TitleGenre> TitleGenres { get; set; }
 
     public TitleDate? TitleDate { get; set; }
+    public IList<KnownForTitle> KnownForTitles { get; set; }
 
     public TitleIsType? TitleIsType { get; set; }
 

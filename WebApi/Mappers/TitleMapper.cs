@@ -16,9 +16,9 @@ public static class TitleMapper
         };
     }
 
-    public static TitleAndGenre ToTitleAndGenreDto(this Title titleObject)
+    public static TitleAndGenreDTO ToTitleAndGenreDto(this Title titleObject)
     {
-        return new TitleAndGenre
+        return new TitleAndGenreDTO
         {
             PrimaryTitle = titleObject.PrimaryTitle,
             Plot = titleObject.TitlePlot?.Plot.ToString(),
