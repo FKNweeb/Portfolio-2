@@ -22,4 +22,5 @@ public class Name
 
     public IList<KnownForTitle> KnownForTitles { get; set; }
     public IList<ProfessionName> ProfessionNames { get; set; }
+    public IList<Crew> Crews { get; set; }
 }
