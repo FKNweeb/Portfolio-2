@@ -13,14 +13,14 @@ public class Language
 
     [Column("akas_id")]
     [Required]
-    [ForeignKey(nameof(TitleKnownAs))]
+    //[ForeignKey(nameof(TitleKnownAs))]
     public string TitleId { get; set; }
 
     [Column("ordering")]
     [Required]
-    [ForeignKey(nameof(TitleKnownAs))]
+    //[ForeignKey(nameof(TitleKnownAs))]
     public int OrderingAkas { get; set; }
 
-
+    [ForeignKey(nameof(TitleId) + "," + nameof(OrderingAkas))]
     public TitleKnownAs? TitleKnownAs { get; set; }
 }
