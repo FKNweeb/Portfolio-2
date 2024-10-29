@@ -94,12 +94,16 @@ public class TitleRepository : ITitlteRepository
 
     public async Task<List<Title>> GetTilteByLanguage(string language, int page, int pageSize)
     {
-        return await _context.Titles
-            .Include(t=>t.TitleKnownAs)
+        var query = _context.Titles
+            .Include(t => t.TitleKnownAs)
                 .ThenInclude(tk => tk.Languages)
-                .Where(t=>t.TitleKnownAs.Any(tk=> tk.Languages.Any(l=>l.Langauge == language)))
+                .Where(t => t.TitleKnownAs.Any(tk => tk.Languages.Any(l => l.Langauge == language)))
             .Skip(page * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+            .Take(pageSize);
+            
+
+        var sql = query.ToQueryString();
+        Console.WriteLine(sql);
+        return await query.ToListAsync();
     }
 }
