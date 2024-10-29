@@ -29,4 +29,6 @@ public class TitleKnownAs
     public Title? Title { get; set; }
 
     public Language? Language { get; set; }
+
+    public Region Region { get; set; }
 }

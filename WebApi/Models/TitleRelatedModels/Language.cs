@@ -21,6 +21,6 @@ public class Language
     //[ForeignKey(nameof(TitleKnownAs))]
     public int OrderingAkas { get; set; }
 
-    [ForeignKey(nameof(TitleId) + "," + nameof(OrderingAkas))]
+        
     public TitleKnownAs? TitleKnownAs { get; set; }
 }

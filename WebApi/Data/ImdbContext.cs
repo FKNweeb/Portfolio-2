@@ -96,6 +96,13 @@ public class ImdbContext : DbContext
             .WithOne(e => e.Title)
             .HasForeignKey(e => e.TitleId);
 
+
+        //Map TitleKnownAs and Region
+        modelBuilder.Entity<TitleKnownAs>()
+            .HasOne(r => r.Region)
+            .WithOne(t => t.TitleKnownAs)
+            .HasForeignKey<Region>(e => new { e.RegionId, e.RegionOrdering });
+
         
 
         // Map ProfessionName and Professions
@@ -135,4 +142,6 @@ public class ImdbContext : DbContext
     public DbSet<Language> Languages { get; set; }
     public DbSet<ProfessionName> ProfessionNames { get; set; }
     public DbSet<Profession> Professions { get; set; }
+
+    public DbSet<Region> Regions { get; set; }
 }
