@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using WebApi.Models.TitleRelatedModels;
 
-namespace WebApi.Models;
+namespace WebApi.Models.TitleRelatedModels;
 
 [Table("wi")]
 [PrimaryKey(nameof(TitleId), nameof(Word), nameof(Field))]

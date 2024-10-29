@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebApi.Models;
+﻿using System.IO.Compression;
+using Microsoft.EntityFrameworkCore;
+using WebApi.Models.NameRelatedModels;
 using WebApi.Models.TitleRelatedModels;
 
 namespace WebApi.Data;
@@ -31,15 +32,16 @@ public class ImdbContext : DbContext
             .WithOne(td => td.Title)
             .HasForeignKey<TitleDate>(td=> td.TitleId);
 
-       modelBuilder.Entity<KnownForTitle>()
-            .HasOne(t => t.Title)
-            .WithMany(kft => kft.KnownForTitles)
+        modelBuilder.Entity<KnownForTitle>()
+            .HasOne(kft => kft.Title)
+            .WithMany(t => t.KnownForTitles)
             .HasForeignKey(t => t.TitleId);
 
         modelBuilder.Entity<KnownForTitle>()
             .HasOne(kft => kft.Name)
             .WithMany(n => n.KnownForTitles)
             .HasForeignKey(kft => kft.NameId);
+
         //Map Title to TitleIsTypes 
         modelBuilder.Entity<TitleIsType>()
             .HasOne(t=>t.Title)
@@ -77,7 +79,16 @@ public class ImdbContext : DbContext
             .WithMany(l => l.Languages)
             .HasForeignKey(l => new {l.TitleId,  l.OrderingAkas});
 
+        // Map ProfessionName and Professions
+        modelBuilder.Entity<ProfessionName>()
+            .HasOne(p => p.Name)
+            .WithMany(n => n.ProfessionNames)
+            .HasForeignKey(p => p.NameId);
 
+        modelBuilder.Entity<ProfessionName>()
+            .HasOne(p => p.Profession)
+            .WithMany(p => p.ProfessionNames)
+            .HasForeignKey(p => p.ProfessionTitle);
 
     }
     public DbSet<Title> Titles { get; set; }
@@ -103,4 +114,6 @@ public class ImdbContext : DbContext
     public DbSet<WordIndex> WordIndexes { get; set; }
 
     public DbSet<Language> Languages { get; set; }
+    public DbSet<ProfessionName> ProfessionNames { get; set; }
+    public DbSet<Profession> Professions { get; set; }
 }

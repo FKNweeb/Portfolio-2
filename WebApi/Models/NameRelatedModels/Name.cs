@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Models.TitleRelatedModels;
-namespace WebApi.Models;
+namespace WebApi.Models.NameRelatedModels;
 
 [Table("name")]
 public class Name
@@ -21,4 +21,5 @@ public class Name
     public string DeathYear { get; set; }
 
     public IList<KnownForTitle> KnownForTitles { get; set; }
+    public IList<ProfessionName> ProfessionNames { get; set; }
 }
