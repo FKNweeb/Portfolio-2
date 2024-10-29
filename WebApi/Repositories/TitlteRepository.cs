@@ -134,4 +134,14 @@ public class TitleRepository : ITitlteRepository
 
         //}
     }
+
+    public async Task<List<Episode>> GetEpisodesByParentTitel(string id, int page, int pageSize)
+    {
+       return await _context.Episodes
+            .Include(t=>t.Title)
+            .Where(t=>t.ParentTitle == id)
+            .Skip (page * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
 }

@@ -44,4 +44,6 @@ public class Title
 
     public IList<WordIndex?> WordIndexes { get; set; }
 
+    public IList<Episode?> Episodes { get; set; }
+
 }

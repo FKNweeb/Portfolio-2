@@ -121,4 +121,20 @@ public class TitleController : BaseController
 
     }
 
+    [HttpGet("episode/{id}")]
+    public async Task<IActionResult> GetEpisodes(string id, int page=0, int pageSize=25)
+    {
+        var episodes = await _titleRepo.GetEpisodesByParentTitel(id, page, pageSize);
+        var total = _titleRepo.NumberOfTitles();
+
+        object result = CreatePaging(
+           nameof(GetTitlesByLnaguage),
+           page,
+           pageSize,
+           total,
+           episodes
+           );
+        return Ok(result);
+
+    }
 }

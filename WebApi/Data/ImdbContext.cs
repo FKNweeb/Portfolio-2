@@ -116,6 +116,12 @@ public class ImdbContext : DbContext
             .WithMany(p => p.ProfessionNames)
             .HasForeignKey(p => p.ProfessionTitle);
 
+        //Map Episode
+        modelBuilder.Entity<Episode>()
+            .HasOne(t=>t.Title)
+            .WithMany(t=>t.Episodes)
+            .HasForeignKey(f=>f.TitleId);
+
     }
     public DbSet<Title> Titles { get; set; }
     
@@ -144,4 +150,6 @@ public class ImdbContext : DbContext
     public DbSet<Profession> Professions { get; set; }
 
     public DbSet<Region> Regions { get; set; }
+
+    public DbSet<Episode> Episodes { get; set; }
 }
