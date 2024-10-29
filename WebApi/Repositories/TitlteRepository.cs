@@ -117,7 +117,9 @@ public class TitleRepository : ITitlteRepository
                     OrderingAkas = tka.OrderingAkas,
                     KnownAsTitle = tka.KnownAsTitle,
                     Type = tka.Type,
-                    Language = tka.Language
+                    Language = tka.Language,
+                    Region = tka.Region
+                   
                 })
 
                 .ToList()

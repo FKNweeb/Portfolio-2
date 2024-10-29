@@ -17,4 +17,6 @@ public interface ITitlteRepository
     Task<List<Title>> GetTitleAndWordIndex(string title, int page, int pageSize);
 
     Task<List<Title>> GetTilteByLanguage(int page, int pageSize);
+
+    
 }
