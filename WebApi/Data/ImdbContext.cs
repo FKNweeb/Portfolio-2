@@ -86,10 +86,17 @@ public class ImdbContext : DbContext
 
 
         //Map TitleKnowAs And Language
-        modelBuilder.Entity<Language>()
-            .HasOne(l => l.TitleKnownAs)
-            .WithMany(l => l.Languages)
-            .HasForeignKey(l => new {l.TitleId,  l.OrderingAkas});
+        modelBuilder.Entity<TitleKnownAs>()
+             .HasOne(t => t.Language)
+             .WithOne(t => t.TitleKnownAs)
+             .HasForeignKey<Language>(l => new { l.TitleId, l.OrderingAkas });
+
+        modelBuilder.Entity<Title>()
+            .HasMany(e => e.TitleKnownAs)
+            .WithOne(e => e.Title)
+            .HasForeignKey(e => e.TitleId);
+
+        
 
         // Map ProfessionName and Professions
         modelBuilder.Entity<ProfessionName>()

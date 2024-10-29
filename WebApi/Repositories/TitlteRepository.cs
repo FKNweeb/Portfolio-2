@@ -92,18 +92,39 @@ public class TitleRepository : ITitlteRepository
             .ToListAsync();
     }
 
-    public async Task<List<Title>> GetTilteByLanguage(string language, int page, int pageSize)
+    public async Task<List<Title>> GetTilteByLanguage(int page, int pageSize)
     {
-        var query = _context.Titles
-            .Include(t => t.TitleKnownAs)
-                .ThenInclude(tk => tk.Languages)
-                .Where(t => t.TitleKnownAs.Any(tk => tk.Languages.Any(l => l.Langauge == language)))
-            .Skip(page * pageSize)
-            .Take(pageSize);
-            
+        //return await  _context.Titles
+        //    .Include(t => t.TitleKnownAs)
+        //    .Skip(page * pageSize)
+        //    .Take(pageSize)
+        //    .ToListAsync();
 
-        var sql = query.ToQueryString();
-        Console.WriteLine(sql);
-        return await query.ToListAsync();
+
+        return await _context.Titles
+        .Select(t => new Title
+        {
+            TitleId = t.TitleId,
+            PrimaryTitle = t.PrimaryTitle,
+            OriginalTitle = t.OriginalTitle,
+            RuntimeMinutes = t.RuntimeMinutes,
+            AverageRating = t.AverageRating,
+            NumberOfVotes = t.NumberOfVotes,
+            TitleKnownAs = t.TitleKnownAs
+                .Select(tka=> new TitleKnownAs
+                {
+                    TitleId = tka.TitleId,
+                    OrderingAkas = tka.OrderingAkas,
+                    KnownAsTitle = tka.KnownAsTitle,
+                    Type = tka.Type,
+                    Language = tka.Language
+                })
+
+                .ToList()
+        })
+        .Skip(page * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
     }
 }

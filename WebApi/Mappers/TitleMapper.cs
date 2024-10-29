@@ -11,7 +11,8 @@ public static class TitleMapper
             PrimaryTitle = titleObject.PrimaryTitle,
             Plot = titleObject.TitlePlot?.Plot.ToString(),
             StartDate = titleObject.TitleDate?.StartYear.ToString(),
-            EndDate = titleObject.TitleDate?.EndYear.ToString()
+            EndDate = titleObject.TitleDate?.EndYear.ToString(),
+            
 
         };
     }
@@ -35,4 +36,6 @@ public static class TitleMapper
             EndDate  =titleObject.TitleDate?.EndYear.ToString()
         };
     }
+
+    
 }

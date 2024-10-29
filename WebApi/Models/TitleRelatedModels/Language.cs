@@ -9,7 +9,7 @@ namespace WebApi.Models.TitleRelatedModels;
 public class Language
 {
     [Column("language")]
-    public string Langauge  { get; set; } = string.Empty;
+    public string LanguageUsed { get; set; } = string.Empty;
 
     [Column("akas_id")]
     [Required]

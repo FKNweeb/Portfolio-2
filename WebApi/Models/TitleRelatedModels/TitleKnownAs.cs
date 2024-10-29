@@ -28,5 +28,5 @@ public class TitleKnownAs
 
     public Title? Title { get; set; }
 
-    public IList<Language?> Languages { get; set; }
+    public Language? Language { get; set; }
 }
