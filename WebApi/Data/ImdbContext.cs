@@ -158,4 +158,5 @@ public class ImdbContext : DbContext
     public DbSet<CrewJob> CrewJobs { get; set; }
     public DbSet<Job> Jobs { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Category> Categories { get; set; }
 }
