@@ -171,4 +171,6 @@ public class ImdbContext : DbContext
     public DbSet<BookMarkTitle> bookMarkTitles { get; set; }
 
     public DbSet<BookMarkName> bookMarkNames { get; set; }
+    public DbSet<RateTitle> RateTitles { get; set; }
+    public DbSet<LocalTitleRating> LocalTitleRatings { get; set; }
 }

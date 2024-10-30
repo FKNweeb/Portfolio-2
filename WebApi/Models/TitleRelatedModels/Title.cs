@@ -53,4 +53,5 @@ public class Title
 
     public IList<BookMarkTitle?> bookMarkTitles { get; set; }
 
+    public IList<RateTitle> RateTitles { get; set; }
 }

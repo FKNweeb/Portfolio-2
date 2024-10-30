@@ -135,6 +135,21 @@ public class TitleController : BaseController
            episodes
            );
         return Ok(result);
+    }
 
+    [HttpGet("ratetitle/{id}")]
+    public async Task<IActionResult> GetRateTitle(string id, int page=0, int pageSize=25)
+    {
+        var rateTitle = await _titleRepo.GetRateTitle(id, page, pageSize);
+        var total = _titleRepo.NumberOfTitles();
+
+        object result = CreatePaging(
+           nameof(GetRateTitle),
+           page,
+           pageSize,
+           total,
+           rateTitle
+           );
+        return Ok(result);
     }
 }
