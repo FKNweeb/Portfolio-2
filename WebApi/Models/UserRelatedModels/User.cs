@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.Models.UserRelatedModels;
 
-[Table("Users")]
+[Table("users")]
 
 public class User
 {

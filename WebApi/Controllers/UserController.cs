@@ -21,7 +21,7 @@ public class UserController : BaseController
     }
 
 
-    [HttpGet(Name = nameof(GetAllUsers))]
+    [HttpGet]
     public async Task<IActionResult> GetAllUsers()
     {
         var users = await _UserRepo.GetAllAsync();
