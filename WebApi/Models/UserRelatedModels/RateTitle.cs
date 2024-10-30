@@ -12,17 +12,21 @@ public class RateTitle
 {
     [Required]
     [Column("tconst")]
+    [ForeignKey(nameof(LocalTitleRating))]
     public string TitleId { get; set; }
 
     [Required]
     [Column("user_id")]
-    public string UserId { get; set; }
+    [ForeignKey(nameof(User))]
+    public int UserId { get; set; }
+
+    public User? User { get; set; }
 
     [Column("votes")]
     public int Votes { get; set; }
 
     [ForeignKey(nameof(TitleId))]
-    public Title Title { get; set; }
+    public Title? Title { get; set; }
     
-    public LocalTitleRating LocalTitleRating { get; set; }
+    public LocalTitleRating? LocalTitleRating { get; set; }
 }

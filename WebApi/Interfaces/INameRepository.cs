@@ -12,5 +12,6 @@ public interface INameRepository
     Task<List<Name>> GetNameAndCrewAsync(int page, int pageSize);
     Task<List<Crew>> GetNameAndJobAsync(int page, int pageSize);
     Task<List<Name>> GetNameAndCategoryAsync(int page, int pageSize);
+
     public int NumberOfName();
 }

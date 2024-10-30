@@ -14,7 +14,7 @@ public class LocalTitleRating
     public string TitleId { get; set; }
 
     [Column("average_rating")]
-    public int AverageRating { get; set; }
+    public double AverageRating { get; set; }
 
     [Column("total_votes")]
     public int TotalVotes { get; set; }

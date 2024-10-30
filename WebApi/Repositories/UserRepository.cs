@@ -44,4 +44,17 @@ public class UserRepository : IUserRepository
             .ThenInclude(s => s.SearchHistory)
             .ToListAsync();
     }
+
+    public async Task<User?> GetUsersBookmarksForName(int id)
+    {
+        return await _context.Users
+            .Include(b=>b.BookMarkNames)
+            .Include(r=>r.RateNames)
+                .ThenInclude(l=>l.LocalNameRating)
+            .Include(b=>b.BookMarkTitles)
+            .Include(r=>r.RateTitles)
+                .ThenInclude(l=>l.LocalTitleRating)
+            .FirstOrDefaultAsync(i=>i.UserId == id);
+            
+    }
 }

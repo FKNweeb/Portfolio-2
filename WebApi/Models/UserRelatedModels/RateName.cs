@@ -15,6 +15,7 @@ public class RateName
 
     [Required]
     [Column("nconst")]
+    [ForeignKey(nameof(LocalNameRating))]
     public string NameId { get; set; }
 
     [Column("vote")]
@@ -25,4 +26,6 @@ public class RateName
     
     [ForeignKey(nameof(NameId))]
     public Name Name { get; set; }
+
+    public LocalNameRating? LocalNameRating { get; set; } 
 }
