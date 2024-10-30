@@ -26,5 +26,6 @@ public class Crew
     public string Category { get; set; }
     public Name Name { get; set; }
     public Title Title { get; set; }
+    public CrewJob CrewJob { get; set; }
 }
 

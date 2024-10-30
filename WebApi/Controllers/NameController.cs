@@ -76,6 +76,14 @@ namespace WebApi.Controllers
 
             object result = CreatePaging(
                 nameof(GetNameAndCrewCharacter),
+                page,
+                pageSize,
+                total,
+                kft
+            );
+            return Ok(result);
+        }
+
         [HttpGet("crew", Name = (nameof(GetNameAndCrew)))]
         public async Task<IActionResult> GetNameAndCrew(int page = 0, int pageSize = 25)
         {
@@ -84,6 +92,22 @@ namespace WebApi.Controllers
 
             object result = CreatePaging(
                 nameof(GetNameAndCrew),
+                page,
+                pageSize,
+                total,
+                kft
+            );
+            return Ok(result);
+        }
+
+        [HttpGet("crew/jobs", Name = (nameof(GetNameAndCrewJobs)))]
+        public async Task<IActionResult> GetNameAndCrewJobs(int page = 0, int pageSize = 25)
+        {
+            var kft = await _nameRepo.GetNameAndJobAsync(page, pageSize);
+            var total = _nameRepo.NumberOfName();
+
+            object result = CreatePaging(
+                nameof(GetNameAndCrewJobs),
                 page,
                 pageSize,
                 total,

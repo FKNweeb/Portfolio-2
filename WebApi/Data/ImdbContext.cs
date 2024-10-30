@@ -145,4 +145,6 @@ public class ImdbContext : DbContext
 
     public DbSet<Region> Regions { get; set; }
     public DbSet<Crew> Crews { get; set; }
+    public DbSet<CrewJob> CrewJobs { get; set; }
+    public DbSet<Job> Jobs { get; set; }
 }
