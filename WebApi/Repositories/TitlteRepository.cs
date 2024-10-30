@@ -145,4 +145,15 @@ public class TitleRepository : ITitlteRepository
             .Take(pageSize)
             .ToListAsync();
     }
+
+    public async Task<List<Title>> GetRateTitle(string id, int page, int pageSize)
+    {
+       return await _context.Titles
+            .Include(t => t.RateTitles)
+            .ThenInclude(rt => rt.LocalTitleRating)
+            .Where(t => t.TitleId == id)
+            .Skip (page * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
 }

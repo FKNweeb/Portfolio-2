@@ -19,6 +19,6 @@ public interface ITitlteRepository
     Task<List<TitleKnownAs>> GetTilteByLanguage(int page, int pageSize);
 
     Task<List<Episode>> GetEpisodesByParentTitel(string id, int page, int pageSize);
- 
+    Task<List<Title>> GetRateTitle(string id, int page, int pageSize);
     
 }
