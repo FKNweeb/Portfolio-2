@@ -6,10 +6,10 @@ namespace WebApi.Models.UserRelatedModels;
 [Table("bookmark_name")]
 public class BookMarkName
 {
-    [Column("")]
+    [Column("user_id")]
     public string UserId { get; set; }
 
-    [Column("user_id")]
+    [Column("nconst")]
     [ForeignKey(nameof(Name))]
     public string NameId { get; set; }
 
