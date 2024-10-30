@@ -23,9 +23,12 @@ public class Crew
     public string NameId { get; set; }
 
     [Column("category")]
-    public string Category { get; set; }
+    [ForeignKey(nameof(Category))]
+    public string CategoryName { get; set; }
     public Name Name { get; set; }
     public Title Title { get; set; }
     public CrewJob CrewJob { get; set; }
+
+    public Category? Category { get; set; }
 }
 
