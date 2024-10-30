@@ -21,7 +21,20 @@ public class UserRepository : IUserRepository
     {
         return await _context.Users
             .ToListAsync();
-            
+    }
+
+    public async Task<List<User>> GetRateNameAndNameAsync(int page, int pageSize){
+        return await _context.Users
+                .Include(u => u.RateNames)
+                .ThenInclude(rn => rn.Name)
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+    }
+
+    public int NumberOfUsers()
+    {
+        return _context.Users.Count();
     }
 
     public async Task<List<User?>> GetHistory()

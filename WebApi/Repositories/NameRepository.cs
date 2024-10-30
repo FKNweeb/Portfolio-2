@@ -67,6 +67,14 @@ public class NameRepository : INameRepository
             .Take(pageSize)
             .ToListAsync();
     }
+    public async Task<List<Name>> GetNameAndCategoryAsync(int page, int pageSize){
+        return await _context.Names
+            .Include(n => n.Crews)
+            .ThenInclude(c => c.Category)
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
 
     public int NumberOfName()
     {

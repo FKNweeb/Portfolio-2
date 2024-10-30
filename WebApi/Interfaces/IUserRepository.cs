@@ -9,5 +9,7 @@ namespace WebApi.Interfaces;
 
        Task<List<User?>> GetHistory();
 
+       Task<List<User>> GetRateNameAndNameAsync(int page, int pageSize);
+       int NumberOfUsers();
     }
 

@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WebApi.Models.UserRelatedModels;
 
 [Table("users")]
-
 public class User
 {
     [Key]
@@ -12,10 +11,13 @@ public class User
     
     public int UserId { get; set; }
 
+    
     [Column("user_name")]
     public string UserName { get; set; }
+    
     [Column("user_password")]
     public string UserPassword { get; set; }
+    
     [Column("user_email")]
     public string UserEmail { get; set; }
 
@@ -24,4 +26,6 @@ public class User
     
     public IList<BookMarkName?> BookMarkNames { get; set; }
    
+    
+    public IList<RateName> RateNames { get; set; }
 }
