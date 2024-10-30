@@ -26,6 +26,6 @@ public class Name
     public IList<ProfessionName> ProfessionNames { get; set; }
     public IList<CrewCharacter> CrewCharacters { get; set; }
     public IList<Crew> Crews { get; set; }
-
     public IList<BookMarkName?> BookMarkNames { get; set; }
+    public IList<RateName> RateNames { get; set; }
 }

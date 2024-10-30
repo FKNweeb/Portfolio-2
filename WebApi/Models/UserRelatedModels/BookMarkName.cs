@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Models.NameRelatedModels;
 
 namespace WebApi.Models.UserRelatedModels;
 
 [Table("bookmark_name")]
+[PrimaryKey(nameof(UserId), nameof(NameId))]
 public class BookMarkName
 {
     [Column("user_id")]

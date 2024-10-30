@@ -6,5 +6,7 @@ namespace WebApi.Interfaces;
     public interface IUserRepository
     {
        Task<List<User?>> GetAllAsync();
+       Task<List<User>> GetRateNameAndNameAsync(int page, int pageSize);
+       int NumberOfUsers();
     }
 
