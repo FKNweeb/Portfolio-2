@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebApi.DTO.NameDtos;
 using WebApi.Models.TitleRelatedModels;
 namespace WebApi.Models.NameRelatedModels;
 
@@ -22,4 +23,6 @@ public class Name
 
     public IList<KnownForTitle> KnownForTitles { get; set; }
     public IList<ProfessionName> ProfessionNames { get; set; }
+    public IList<CrewCharacter> CrewCharacters { get; set; }
+    public IList<Crew> Crews { get; set; }
 }
