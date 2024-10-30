@@ -27,5 +27,5 @@ public class Name
     public IList<CrewCharacter> CrewCharacters { get; set; }
     public IList<Crew> Crews { get; set; }
 
-    public IList<BookMarkName?> Crew { get; set; }
+    public IList<BookMarkName?> BookMarkNames { get; set; }
 }
