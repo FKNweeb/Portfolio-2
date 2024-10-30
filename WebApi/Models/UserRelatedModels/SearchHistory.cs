@@ -14,4 +14,7 @@ public class SearchHistory
     [Column("description")]
     public string Description { get; set; }
 
+
+    public IList<Has?> Has { get; set; }
+
 }

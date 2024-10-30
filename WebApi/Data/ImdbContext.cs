@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models.NameRelatedModels;
 using WebApi.Models.TitleRelatedModels;
+using WebApi.Models.UserRelatedModels;
 
 namespace WebApi.Data;
 
@@ -122,6 +123,12 @@ public class ImdbContext : DbContext
             .WithMany(t=>t.Episodes)
             .HasForeignKey(f=>f.TitleId);
 
+        //Map Title to BookmarkTitle
+        modelBuilder.Entity<Title>()
+            .HasMany(b => b.bookMarkTitles)
+            .WithOne(b => b.Title)
+            .HasForeignKey(t => t.TitleId);
+
     }
     public DbSet<Title> Titles { get; set; }
 
@@ -156,4 +163,12 @@ public class ImdbContext : DbContext
     public DbSet<Crew> Crews { get; set; }
     public DbSet<CrewJob> CrewJobs { get; set; }
     public DbSet<Job> Jobs { get; set; }
+    
+    public DbSet<SearchHistory> SearchHistories { get; set; }
+
+    public DbSet<Has> Has { get; set; }
+
+    public DbSet<BookMarkTitle> bookMarkTitles { get; set; }
+
+    public DbSet<BookMarkName> bookMarkNames { get; set; }
 }

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Models.NameRelatedModels;
+using WebApi.Models.UserRelatedModels;
 
 
 namespace WebApi.Models.TitleRelatedModels;
@@ -49,5 +50,7 @@ public class Title
     public IList<CrewCharacter> CrewCharacters { get; set; }
 
     public IList<Crew?> Crews { get; set; }
+
+    public IList<BookMarkTitle?> bookMarkTitles { get; set; }
 
 }
