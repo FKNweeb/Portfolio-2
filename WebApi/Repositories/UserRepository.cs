@@ -23,4 +23,12 @@ public class UserRepository : IUserRepository
             .ToListAsync();
             
     }
+
+    public async Task<List<User?>> GetHistory()
+    {
+        return await _context.Users
+            .Include(h => h.Has)
+            .ThenInclude(s => s.SearchHistory)
+            .ToListAsync();
+    }
 }

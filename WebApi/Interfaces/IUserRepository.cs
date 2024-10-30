@@ -6,5 +6,8 @@ namespace WebApi.Interfaces;
     public interface IUserRepository
     {
        Task<List<User?>> GetAllAsync();
+
+       Task<List<User?>> GetHistory();
+
     }
 

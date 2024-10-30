@@ -9,12 +9,11 @@ public class SearchHistory
     [Key]
     [Required]
     [Column("history_id")]
+    
     public int HistoryId { get; set; }
 
     [Column("description")]
     public string Description { get; set; }
-
-
     public IList<Has?> Has { get; set; }
 
 }

@@ -30,6 +30,14 @@ public class UserController : BaseController
         return Ok(users);
     }
 
+    [HttpGet("history")]
+    public async Task<IActionResult> GetUsersHistory()
+    {
+        var history = await _UserRepo.GetHistory();
+        if (history == null) return NotFound();
+        return Ok(history);
+    }
+
 
 }
 

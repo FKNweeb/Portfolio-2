@@ -129,6 +129,19 @@ public class ImdbContext : DbContext
             .WithOne(b => b.Title)
             .HasForeignKey(t => t.TitleId);
 
+        //Map user to Has and Search history
+
+        modelBuilder.Entity<Has>()
+            .HasOne(tg => tg.User)
+            .WithMany(t => t.Has)
+            .HasForeignKey(tg => tg.UserId);
+
+        modelBuilder.Entity<Has>()
+            .HasOne(tg => tg.SearchHistory)
+            .WithMany(g => g.Has)
+            .HasForeignKey(tg => tg.HistoryId);
+
+
     }
     public DbSet<Title> Titles { get; set; }
 
