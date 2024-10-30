@@ -62,5 +62,7 @@ public class UserController : BaseController
         return Ok(bookmark);
     }
 
+
+    //TODO: All the Crud Operations ( Create User, Read User, Put User, Delete User)
 }
 

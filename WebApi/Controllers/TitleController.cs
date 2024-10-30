@@ -42,19 +42,6 @@ public class TitleController : BaseController
     }
 
 
-    [HttpGet("{startyear}", Name = nameof(GetAllTitlesByDate))]
-    public async Task<ActionResult> GetAllTitlesByDate([FromRoute] string startyear, int page =0 , int pageSize=25)
-    {
-        var titles = await _titleRepo.GetAllTitlesByDate(startyear, page, pageSize);
-        
-        var total = _titleRepo.NumberOfTitles();
-        
-        var titlesDto = titles.Select(s=>s.ToTitleAndDateDto());
-
-        
-        return Ok(titlesDto);
-    }
-
     [HttpGet("type", Name = nameof(GetTitlesByType))]
     public async Task<IActionResult> GetTitlesByType(int page=0, int pageSize=25)
     {

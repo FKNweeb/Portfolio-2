@@ -30,16 +30,24 @@ public class TitleRepository : ITitlteRepository
     {
         return await _context.Titles
             .Include(t => t.TitlePlot)
-            .Include(d=>d.TitleDate)
-            .Where(t => t.TitlePlot != null)
+            .Include(d => d.TitleDate)
+            .Include(g => g.TitleGenres)
+                .ThenInclude(gn => gn.Genre)
+            .Include(a => a.TitleKnownAs)
+                .ThenInclude(l => l.Language)
+            .Include(p => p.TitlePoster)
+            .Include(tt => tt.TitleIsType)
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToListAsync();
-    }
 
-  
 
-    public int NumberOfTitles()
+    } 
+
+
+
+
+        public int NumberOfTitles()
     {
         return _context.Titles.Count();
     }

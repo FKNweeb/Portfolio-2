@@ -12,6 +12,14 @@ public class TitleAndPlotDto
     public string StartDate { get; set; }
     public string EndDate { get; set; }
 
+    public IList<string> Genres { get; set; } = new List<string>();
+
+    public IList<string> Languages { get; set; } = new List<string>();
+
+    public string Poster { get; set; }
+
+    public string Type { get; set; }
+
    
 
 }
