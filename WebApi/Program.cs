@@ -25,6 +25,7 @@ builder.Services.AddDbContext<ImdbContext>(
 
 builder.Services.AddScoped<ITitlteRepository, TitleRepository>();
 builder.Services.AddScoped<INameRepository, NameRepository>();
+builder.Services.AddScoped <IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

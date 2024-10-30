@@ -18,6 +18,7 @@ public class TitleRepository : ITitlteRepository
         _context = context;
     }
 
+
     /// <summary>
     /// Retrives a paginated ilst of titles that have a non-null plot.
     /// </summary>
