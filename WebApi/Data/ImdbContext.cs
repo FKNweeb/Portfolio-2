@@ -163,7 +163,7 @@ public class ImdbContext : DbContext
     public DbSet<Crew> Crews { get; set; }
     public DbSet<CrewJob> CrewJobs { get; set; }
     public DbSet<Job> Jobs { get; set; }
-    
+
     public DbSet<SearchHistory> SearchHistories { get; set; }
 
     public DbSet<Has> Has { get; set; }
@@ -171,6 +171,7 @@ public class ImdbContext : DbContext
     public DbSet<BookMarkTitle> bookMarkTitles { get; set; }
 
     public DbSet<BookMarkName> bookMarkNames { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<RateTitle> RateTitles { get; set; }
     public DbSet<LocalTitleRating> LocalTitleRatings { get; set; }
 }
