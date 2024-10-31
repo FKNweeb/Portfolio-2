@@ -1,4 +1,7 @@
-﻿using WebApi.Models;
+﻿
+using System.Threading.Tasks;
+using WebApi.DTO.TitleDtos;
+using WebApi.Models;
 using WebApi.Models.TitleRelatedModels;
 
 namespace WebApi.Interfaces;
@@ -20,5 +23,8 @@ public interface ITitlteRepository
 
     Task<List<Episode>> GetEpisodesByParentTitel(string id, int page, int pageSize);
     Task<List<Title>> GetRateTitle(string id, int page, int pageSize);
-    
+
+    Task<List<SearchResult>> SearchWithKeyWords(string keyword1,int page,int pageSize);
+    int NumbErOfTitlesPerKeyWord(string keyword1);
+
 }

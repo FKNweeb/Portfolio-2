@@ -5,6 +5,7 @@ using WebApi.DTO.TitleDtos;
 using WebApi.Interfaces;
 using WebApi.Mappers;
 using WebApi.Models.TitleRelatedModels;
+using WebApi.Models.UserRelatedModels;
 
 namespace WebApi.Controllers;
 
@@ -43,7 +44,7 @@ public class TitleController : BaseController
 
 
     [HttpGet("type", Name = nameof(GetTitlesByType))]
-    public async Task<IActionResult> GetTitlesByType(int page=0, int pageSize=25)
+    public async Task<IActionResult> GetTitlesByType(int page = 0, int pageSize = 25)
     {
         var titles = await _titleRepo.GetAllTitlesByType(page, pageSize);
 
@@ -59,8 +60,8 @@ public class TitleController : BaseController
         return Ok(result);
     }
 
-    [HttpGet("posters", Name =nameof(GetTitlesAndPosters))]
-    public async Task<IActionResult> GetTitlesAndPosters(int page=0, int pageSize =25)
+    [HttpGet("posters", Name = nameof(GetTitlesAndPosters))]
+    public async Task<IActionResult> GetTitlesAndPosters(int page = 0, int pageSize = 25)
     {
         var titles = await _titleRepo.GetAllTitlesWithPoster(page, pageSize);
         var total = _titleRepo.NumberOfTitles();
@@ -92,11 +93,11 @@ public class TitleController : BaseController
     }
 
     [HttpGet("languages")]
-    public async Task<IActionResult> GetTitlesByLnaguage(int page=0, int pageSize=25)
+    public async Task<IActionResult> GetTitlesByLnaguage(int page = 0, int pageSize = 25)
     {
         var titles = await _titleRepo.GetTilteByLanguage(page, pageSize);
         var total = _titleRepo.NumberOfTitles();
-        
+
         object result = CreatePaging(
            nameof(GetTitlesByLnaguage),
            page,
@@ -109,7 +110,7 @@ public class TitleController : BaseController
     }
 
     [HttpGet("episode/{id}")]
-    public async Task<IActionResult> GetEpisodes(string id, int page=0, int pageSize=25)
+    public async Task<IActionResult> GetEpisodes(string id, int page = 0, int pageSize = 25)
     {
         var episodes = await _titleRepo.GetEpisodesByParentTitel(id, page, pageSize);
         var total = _titleRepo.NumberOfTitles();
@@ -125,7 +126,7 @@ public class TitleController : BaseController
     }
 
     [HttpGet("ratetitle/{id}")]
-    public async Task<IActionResult> GetRateTitle(string id, int page=0, int pageSize=25)
+    public async Task<IActionResult> GetRateTitle(string id, int page = 0, int pageSize = 25)
     {
         var rateTitle = await _titleRepo.GetRateTitle(id, page, pageSize);
         var total = _titleRepo.NumberOfTitles();
@@ -136,6 +137,23 @@ public class TitleController : BaseController
            pageSize,
            total,
            rateTitle
+           );
+        return Ok(result);
+    }
+
+
+    [HttpGet("search/{keyword}", Name =nameof(SearchWithKeyword))]
+    public async Task<IActionResult> SearchWithKeyword(string keyword, int page=0, int pageSize=25)
+    {
+        var title = await _titleRepo.SearchWithKeyWords(keyword, page, pageSize);
+
+        var total = _titleRepo.NumbErOfTitlesPerKeyWord(keyword);
+        object result = CreatePaging(
+           nameof(SearchWithKeyword),
+           page,
+           pageSize,
+           total,
+           title
            );
         return Ok(result);
     }

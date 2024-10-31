@@ -8,6 +8,7 @@ using WebApi.Models.UserRelatedModels;
 namespace WebApi.Models.TitleRelatedModels;
 
 [Table("title")]
+
 public class Title
 {
     [Key]

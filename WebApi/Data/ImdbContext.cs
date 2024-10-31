@@ -1,5 +1,7 @@
 ﻿using System.IO.Compression;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using WebApi.DTO.TitleDtos;
 using WebApi.Models.NameRelatedModels;
 using WebApi.Models.TitleRelatedModels;
 using WebApi.Models.UserRelatedModels;
@@ -11,6 +13,9 @@ public class ImdbContext : DbContext
     public ImdbContext(DbContextOptions options) : base(options)
     { }
 
+   
+
+    //public string StringSearch(string text) => throw new NotImplementedException();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Title>()
@@ -141,6 +146,9 @@ public class ImdbContext : DbContext
             .WithMany(g => g.Has)
             .HasForeignKey(tg => tg.HistoryId);
 
+       
+
+
 
     }
     public DbSet<Title> Titles { get; set; }
@@ -191,4 +199,6 @@ public class ImdbContext : DbContext
     public DbSet<LocalNameRating> LocalNameRatings { get; set; } 
     public DbSet<RateName> RateNames { get; set; }
     public DbSet<Category> Categories { get; set; }
+
+    public DbSet<SearchResult> SearchResults { get; set; }
 }

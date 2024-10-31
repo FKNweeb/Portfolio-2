@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Interfaces;
 using WebApi.Models.TitleRelatedModels;
 using WebApi.DTO.TitleDtos;
 using WebApi.Models;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace WebApi.Repositories;
 
@@ -144,6 +144,7 @@ public class TitleRepository : ITitlteRepository
         //}
     }
 
+    
     public async Task<List<Episode>> GetEpisodesByParentTitel(string id, int page, int pageSize)
     {
        return await _context.Episodes
@@ -163,5 +164,31 @@ public class TitleRepository : ITitlteRepository
             .Skip (page * pageSize)
             .Take(pageSize)
             .ToListAsync();
+    }
+
+
+    /// <summary>
+    /// Takes a string as parameter and returns the titleId and the primary title of titles that the string matches either their primary title or the plot
+    /// </summary>
+    /// <param name="keyword1"></param>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    public async Task<List<SearchResult>> SearchWithKeyWords(string keyword1, int page, int pageSize)
+    {
+        var query = "SELECT * FROM string_search(@p0)";
+        return await  _context.SearchResults
+            .FromSqlRaw(query, keyword1)
+            .Skip(page * pageSize)
+            .Take (pageSize)
+            .ToListAsync();
+    }
+
+    public int NumbErOfTitlesPerKeyWord(string keyword1)
+    {
+        var query = "SELECT * FROM string_search(@p0)";
+        return _context.SearchResults
+            .FromSqlRaw(query, keyword1)
+            .Count();
     }
 }
