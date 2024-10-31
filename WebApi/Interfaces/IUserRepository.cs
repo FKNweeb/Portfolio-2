@@ -2,16 +2,20 @@
 using WebApi.Models.TitleRelatedModels;
 using WebApi.Models.UserRelatedModels;
 namespace WebApi.Interfaces;
+public interface IUserRepository
+{
+    Task<User?> GetUserById(int id);
+    Task<List<User>> GetAllAsync();
 
-    public interface IUserRepository
-    {
-       Task<List<User?>> GetAllAsync();
+    Task<User?> CreateUser(User user);
 
-       Task<List<User?>> GetHistory();
+    Task<User?> DeleteUser(int id);
 
-       Task<List<User>> GetRateNameAndNameAsync(int page, int pageSize);
+    Task<List<User?>> GetHistory();
 
-       Task<User?> GetUsersBookmarksForName(int id);
-       int NumberOfUsers();
-    }
+    Task<List<User>> GetRateNameAndNameAsync(int page, int pageSize);
+
+    Task<User?> GetUsersBookmarksForName(int id);
+    int NumberOfUsers();
+}
 

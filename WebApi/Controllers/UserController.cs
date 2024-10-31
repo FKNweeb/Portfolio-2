@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Controllers;
 using WebApi.DTO.TitleDtos;
+using WebApi.DTO.UserDtos;
 using WebApi.Interfaces;
 using WebApi.Mappers;
 using WebApi.Models.TitleRelatedModels;
@@ -27,7 +28,38 @@ public class UserController : BaseController
         var users = await _userRepo.GetAllAsync();
         if (users == null) return NotFound();
 
-        return Ok(users);
+        var usersDto = users.Select(s => s.ToUserDto());
+        
+        return Ok(usersDto);
+    }
+
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetUserById([FromRoute] int id)
+    {
+        var user = await _userRepo.GetUserById(id);
+        if(user == null) return NotFound("User does not exist");
+        var userDto = user.ToUserDto();
+
+        return Ok(userDto);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserDto CreateUserDto)
+    {
+        var user = CreateUserDto.FromCreateUserDtoToUser();
+        await _userRepo.CreateUser(user);
+
+        return CreatedAtAction(nameof(GetUserById), new { id = user.UserId }, user.ToUserDto());
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUser([FromRoute] int id)
+    {
+        var user = await _userRepo.DeleteUser(id);
+        if (user == null) return NotFound();
+        var userDto = user.ToUserDto();
+        return Ok($"User: {userDto.ToString()} has been deleted");
     }
 
     [HttpGet("history")]
@@ -54,7 +86,7 @@ public class UserController : BaseController
         return Ok(result);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("bookmark/{id}")]
     public async Task<IActionResult> GetBookMarkByUser(int id)
     {
         var bookmark = await _userRepo.GetUsersBookmarksForName(id);

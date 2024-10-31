@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Interfaces;
 using WebApi.Models.NameRelatedModels;
@@ -17,11 +18,38 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task<List<User?>> GetAllAsync()
+    public async Task<List<User>> GetAllAsync()
     {
         return await _context.Users
             .ToListAsync();
     }
+    public async Task<User?> GetUserById(int id)
+    {
+        return await _context.Users.FirstOrDefaultAsync(e=>e.UserId == id);
+    }
+
+    public async Task<User?> CreateUser(User user)
+    {
+        user.UserId = await _context.Users.MaxAsync(k => k.UserId) + 1;
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
+        return user;
+    }
+
+    public async Task<User?> DeleteUser(int id)
+    {
+        var ExistingUser = await _context.Users.FirstOrDefaultAsync(u => u.UserId == id);
+        if(ExistingUser == null)
+        {
+            return null;
+        }
+        _context.Users.Remove(ExistingUser);
+        await _context.SaveChangesAsync();
+        return ExistingUser;
+    }
+
+
+    
 
     public async Task<List<User>> GetRateNameAndNameAsync(int page, int pageSize){
         return await _context.Users
@@ -57,4 +85,6 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync(i=>i.UserId == id);
             
     }
+
+  
 }
