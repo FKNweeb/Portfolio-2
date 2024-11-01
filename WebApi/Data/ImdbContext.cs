@@ -1,7 +1,7 @@
 ﻿using System.IO.Compression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using WebApi.DTO.TitleDtos;
+using WebApi.Models.FunctionBasedModels;
 using WebApi.Models.NameRelatedModels;
 using WebApi.Models.TitleRelatedModels;
 using WebApi.Models.UserRelatedModels;
@@ -13,9 +13,6 @@ public class ImdbContext : DbContext
     public ImdbContext(DbContextOptions options) : base(options)
     { }
 
-   
-
-    //public string StringSearch(string text) => throw new NotImplementedException();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Title>()
@@ -134,8 +131,7 @@ public class ImdbContext : DbContext
             .WithOne(b => b.Title)
             .HasForeignKey(t => t.TitleId);
 
-        //Map user to Has and Search history
-
+        //Map user to Has and Search History
         modelBuilder.Entity<Has>()
             .HasOne(tg => tg.User)
             .WithMany(t => t.Has)
@@ -146,11 +142,24 @@ public class ImdbContext : DbContext
             .WithMany(g => g.Has)
             .HasForeignKey(tg => tg.HistoryId);
 
-       
-
-
-
+        modelBuilder.HasDbFunction(() => StringSearch(default))
+            .HasName("string_search");
+        modelBuilder.HasDbFunction(() => StructuredStringSearch(default, default, default, default))
+            .HasName("structured_string_search");
+        modelBuilder.HasDbFunction(() => BestMatch(default))
+            .HasName("best_match");
     }
+
+    public IQueryable<SearchResult> StringSearch (string keyword)
+        => FromExpression(()=> StringSearch(keyword));
+
+    public IQueryable<SearchResult> StructuredStringSearch(string k1, string k2, string k3, string k4)
+        => FromExpression(() => StructuredStringSearch(k1, k2, k3, k4));
+
+    public IQueryable<BestMatch> BestMatch(string [] keywords)
+        =>FromExpression(()=> BestMatch(keywords));
+
+
     public DbSet<Title> Titles { get; set; }
 
     public DbSet<TitleKnownAs> KnowAs { get; set; }
@@ -201,4 +210,6 @@ public class ImdbContext : DbContext
     public DbSet<Category> Categories { get; set; }
 
     public DbSet<SearchResult> SearchResults { get; set; }
+
+    public DbSet<BestMatch> BestMatches { get; set; }
 }

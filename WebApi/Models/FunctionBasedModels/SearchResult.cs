@@ -2,16 +2,16 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
-namespace WebApi.DTO.TitleDtos;
+namespace WebApi.Models.FunctionBasedModels;
 
 
 [Keyless]
 public class SearchResult
 {
-    
+
     public string tconst { get; set; }
 
-    
+
     public string primary_title { get; set; }
 
     public override string? ToString()

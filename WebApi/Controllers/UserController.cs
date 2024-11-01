@@ -33,7 +33,7 @@ public class UserController : BaseController
         return Ok(usersDto);
     }
 
-
+    
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetUserById([FromRoute] int id)
     {
@@ -61,6 +61,7 @@ public class UserController : BaseController
         var userDto = user.ToUserDto();
         return Ok($"User: {userDto.ToString()} has been deleted");
     }
+
 
     [HttpGet("history")]
     public async Task<IActionResult> GetUsersHistory()

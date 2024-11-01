@@ -4,8 +4,8 @@ using WebApi.Data;
 using WebApi.DTO.TitleDtos;
 using WebApi.Interfaces;
 using WebApi.Mappers;
-using WebApi.Models.TitleRelatedModels;
-using WebApi.Models.UserRelatedModels;
+using WebApi.Models.FunctionBasedModels;
+
 
 namespace WebApi.Controllers;
 
@@ -15,6 +15,7 @@ public class TitleController : BaseController
 {
     private readonly ITitlteRepository _titleRepo;
     private readonly LinkGenerator _linkGenerator;
+
 
     public TitleController(ITitlteRepository titleRepo, LinkGenerator linkGenerator) : base(linkGenerator)
     {
@@ -42,112 +43,17 @@ public class TitleController : BaseController
         return Ok(result);
     }
 
+    //TODO: GetTitleById , ToTitleAndPlot
+    //TODO: SearchFunctioncs that are relevant from the database
 
-    [HttpGet("type", Name = nameof(GetTitlesByType))]
-    public async Task<IActionResult> GetTitlesByType(int page = 0, int pageSize = 25)
-    {
-        var titles = await _titleRepo.GetAllTitlesByType(page, pageSize);
-
-        var total = _titleRepo.NumberOfTitles();
-
-        object result = CreatePaging(
-            nameof(GetTitlesByType),
-            page,
-            pageSize,
-            total,
-            titles
-            );
-        return Ok(result);
-    }
-
-    [HttpGet("posters", Name = nameof(GetTitlesAndPosters))]
-    public async Task<IActionResult> GetTitlesAndPosters(int page = 0, int pageSize = 25)
-    {
-        var titles = await _titleRepo.GetAllTitlesWithPoster(page, pageSize);
-        var total = _titleRepo.NumberOfTitles();
-
-        object result = CreatePaging(
-            nameof(GetTitlesAndPosters),
-            page,
-            pageSize,
-            total,
-            titles
-            );
-        return Ok(result);
-    }
-
-    [HttpGet("wordindex/{id}", Name = nameof(GetWordIndex))]
-    public async Task<IActionResult> GetWordIndex(string id, int page = 0, int pageSize = 25)
-    {
-        var titles = await _titleRepo.GetTitleAndWordIndex(id, page, pageSize);
-        var total = _titleRepo.NumberOfTitles();
-
-        object result = CreatePaging(
-            nameof(GetWordIndex),
-            page,
-            pageSize,
-            total,
-            titles
-            );
-        return Ok(result);
-    }
-
-    [HttpGet("languages")]
-    public async Task<IActionResult> GetTitlesByLnaguage(int page = 0, int pageSize = 25)
-    {
-        var titles = await _titleRepo.GetTilteByLanguage(page, pageSize);
-        var total = _titleRepo.NumberOfTitles();
-
-        object result = CreatePaging(
-           nameof(GetTitlesByLnaguage),
-           page,
-           pageSize,
-           total,
-           titles
-           );
-        return Ok(result);
-
-    }
-
-    [HttpGet("episode/{id}")]
-    public async Task<IActionResult> GetEpisodes(string id, int page = 0, int pageSize = 25)
-    {
-        var episodes = await _titleRepo.GetEpisodesByParentTitel(id, page, pageSize);
-        var total = _titleRepo.NumberOfTitles();
-
-        object result = CreatePaging(
-           nameof(GetTitlesByLnaguage),
-           page,
-           pageSize,
-           total,
-           episodes
-           );
-        return Ok(result);
-    }
-
-    [HttpGet("ratetitle/{id}")]
-    public async Task<IActionResult> GetRateTitle(string id, int page = 0, int pageSize = 25)
-    {
-        var rateTitle = await _titleRepo.GetRateTitle(id, page, pageSize);
-        var total = _titleRepo.NumberOfTitles();
-
-        object result = CreatePaging(
-           nameof(GetRateTitle),
-           page,
-           pageSize,
-           total,
-           rateTitle
-           );
-        return Ok(result);
-    }
-
+    
 
     [HttpGet("search/{keyword}", Name =nameof(SearchWithKeyword))]
     public async Task<IActionResult> SearchWithKeyword(string keyword, int page=0, int pageSize=25)
     {
-        var title = await _titleRepo.SearchWithKeyWords(keyword, page, pageSize);
+        var title = await _titleRepo.SearchWithKeyword(keyword, page, pageSize);
 
-        var total = _titleRepo.NumbErOfTitlesPerKeyWord(keyword);
+        var total = _titleRepo.NumberOfTitlesPerKeyword(keyword);
         object result = CreatePaging(
            nameof(SearchWithKeyword),
            page,
@@ -156,5 +62,25 @@ public class TitleController : BaseController
            title
            );
         return Ok(result);
+    }
+
+    [HttpGet("searchWithKeywords", Name = nameof(SearchWithStructuredKeywords))]
+    public async Task<IActionResult> SearchWithStructuredKeywords(string k1, string k2, string k3, string k4)
+    {
+        var titles = await _titleRepo.StructuredStringSearch(k1, k2, k3, k4);
+       
+        return Ok(titles);
+    }
+
+
+    [HttpGet("bestmatch")]
+    public async Task<IActionResult> BestMacth([FromQuery] QueryObject query)
+    {        
+        var BestMatchTitles = await _titleRepo.BestMatch(query.keywords.ToArray());
+        if(BestMatchTitles == null)
+        {
+            return NotFound();
+        }
+        return Ok(BestMatchTitles);
     }
 }
