@@ -24,6 +24,8 @@ public class BaseController :ControllerBase
         return GetUrl(linkName, new { page, pageSize });
     }
 
+   
+
     protected object CreatePaging<T> (string linkName, int page, int pageSize, int total, IEnumerable<T> items)
     {
         const int MaxPageSize = 25;
@@ -55,4 +57,6 @@ public class BaseController :ControllerBase
         };
         return result;
     }
+
+
 }

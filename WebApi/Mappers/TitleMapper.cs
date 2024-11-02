@@ -1,6 +1,14 @@
-﻿using WebApi.DTO.TitleDtos;
+﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.OpenApi.Services;
+using WebApi.DTO.TitleDtos;
+using WebApi.Models.FunctionBasedModels;
 using WebApi.Models.TitleRelatedModels;
+
+using SearchResult = WebApi.Models.FunctionBasedModels.SearchResult;
+
+
 namespace WebApi.Mappers;
+
 
 public static class TitleMapper
 {
@@ -23,13 +31,32 @@ public static class TitleMapper
         }; ;
     }
 
-    public static TitleAndGenreDTO ToTitleAndGenreDto(this Title titleObject)
+   
+
+    public static SearchResult ToSearchResultFromBestMatch(this BestMatch bestMatchObject)
     {
-        return new TitleAndGenreDTO
+        return new SearchResult
         {
-            PrimaryTitle = titleObject.PrimaryTitle,
-            Plot = titleObject.TitlePlot?.Plot.ToString(),
-            Genre = titleObject.TitleGenres.Select(tg => tg.Genre.GenreName).ToList()
+            tconst = bestMatchObject.tconst,
+            primary_title = bestMatchObject.title,
+        };
+    }
+
+    public static TitleAndGenre ToTitleAndGenre(this Title titleObject)
+    {
+        return new TitleAndGenre
+        {
+            title = titleObject.OriginalTitle
+        };
+    }
+
+    public static TitleAndRating ToTitleAndRate(this Title titleObject)
+    {
+        return new TitleAndRating
+        {
+            Title = titleObject.PrimaryTitle,
+            AverageRating = titleObject.AverageRating,
+            NumberOfVotes = titleObject.NumberOfVotes,
         };
     }
 

@@ -148,6 +148,12 @@ public class ImdbContext : DbContext
             .HasName("structured_string_search");
         modelBuilder.HasDbFunction(() => BestMatch(default))
             .HasName("best_match");
+           
+        modelBuilder.HasDbFunction(() => ExactMatch(default))
+            .HasName("exact_match");
+
+        modelBuilder.HasDbFunction(() => SimilarTitles(default))
+            .HasName("similar_movies");
     }
 
     public IQueryable<SearchResult> StringSearch (string keyword)
@@ -159,6 +165,12 @@ public class ImdbContext : DbContext
     public IQueryable<BestMatch> BestMatch(string [] keywords)
         =>FromExpression(()=> BestMatch(keywords));
 
+
+    public IQueryable<SearchResult> ExactMatch(string[] keywords)
+        => FromExpression(()=> ExactMatch(keywords));
+
+    public IQueryable<SearchResult> SimilarTitles(string keyword)
+        => FromExpression(() => SimilarTitles(keyword));
 
     public DbSet<Title> Titles { get; set; }
 

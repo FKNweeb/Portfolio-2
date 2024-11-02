@@ -6,7 +6,7 @@ namespace WebApi.Models.FunctionBasedModels;
 public class BestMatch
 {
     public string tconst { get; set; }
-    public int rank { get; set; }
+    public int? rank { get; set; } 
     public string title { get; set; }
     
 }
