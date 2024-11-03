@@ -4,7 +4,6 @@ using WebApi.Data;
 using WebApi.DTO.NameDtos;
 using WebApi.Interfaces;
 using WebApi.Models.NameRelatedModels;
-using WebApi.Models.TitleRelatedModels;
 
 namespace WebApi.Repositories;
 

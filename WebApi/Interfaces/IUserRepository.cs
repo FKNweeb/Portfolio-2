@@ -5,6 +5,7 @@ namespace WebApi.Interfaces;
 public interface IUserRepository
 {
     Task<User?> GetUserById(int id);
+    Task<User?> GetUserByUserName(string userName);
     Task<List<User>> GetAllAsync();
 
     Task<User?> CreateUser(User user);
