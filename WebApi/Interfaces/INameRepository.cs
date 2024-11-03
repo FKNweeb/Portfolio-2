@@ -1,4 +1,5 @@
 using WebApi.DTO.NameDtos;
+using WebApi.DTO.UserDtos;
 using WebApi.Models.FunctionBasedModels;
 using WebApi.Models.NameRelatedModels;
 using WebApi.Models.TitleRelatedModels;
@@ -14,6 +15,8 @@ public interface INameRepository
     Task<List<NameSearchResults>> SearchForName(string title, string plot, string character, string person);
 
     Task<List<FindCoPlayersResults>> FindCoPlayers(string nconst);
+
+    Task<TitleRelatedName?> FindTitlesRelatedWithName(string name);
     
     
     

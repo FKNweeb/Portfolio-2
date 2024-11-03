@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.Data;
 using WebApi.DTO.NameDtos;
+using WebApi.DTO.UserDtos;
 using WebApi.Interfaces;
 using WebApi.Models.FunctionBasedModels;
 using WebApi.Models.NameRelatedModels;
@@ -50,43 +51,7 @@ public class NameRepository : INameRepository
 
         return names;
     }
-          
 
-    //public async Task<List<Name>> GetNameAndCrewAsync(int page, int pageSize)
-    //{
-    //    return await _context.Names
-    //        .Include(n => n.Crews)
-    //        .ThenInclude(c => c.Title)
-    //        .Skip (page * pageSize)
-    //        .Take(pageSize)
-    //        .ToListAsync();
-    //}
-
-    //public async Task<List<Name>> GetNameAndCrewCharacterAsync(int page, int pageSize){
-    //    return await _context.Names
-    //        .Include(n => n.CrewCharacters)
-    //        .ThenInclude(cc => cc.Title)
-    //        .Skip(page * pageSize)
-    //        .Take(pageSize)
-    //        .ToListAsync();
-    //}
-
-    //public async Task<List<Crew>> GetNameAndJobAsync(int page, int pageSize){
-    //    return await _context.Crews
-    //        .Include(n => n.CrewJob)
-    //        .ThenInclude(cj => cj.Job)
-    //        .Skip(page * pageSize)
-    //        .Take(pageSize)
-    //        .ToListAsync();
-    //}
-    //public async Task<List<Name>> GetNameAndCategoryAsync(int page, int pageSize){
-    //    return await _context.Names
-    //        .Include(n => n.Crews)
-    //        .ThenInclude(c => c.Category)
-    //        .Skip(page * pageSize)
-    //        .Take(pageSize)
-    //        .ToListAsync();
-    //}
 
     public int NumberOfName()
     {
@@ -119,5 +84,27 @@ public class NameRepository : INameRepository
     public async Task<List<FindCoPlayersResults>> FindCoPlayers(string nconst)
     {
        return await _context.FindCoPlayers(nconst).ToListAsync();
+    }
+
+    public async Task<TitleRelatedName?> FindTitlesRelatedWithName(string name)
+    {
+        return await  _context.Names
+            .Where(w=>w.PrimaryName == name)
+            .Include(c => c.CrewCharacters)
+            .ThenInclude(t => t.Title)
+            .Include(c=>c.Crews)
+            .ThenInclude(c=>c.CrewJob)
+            .ThenInclude(j=>j.Job)
+            .Select(n=> new TitleRelatedName
+            {
+                Name = n.PrimaryName,
+                Title = n.CrewCharacters.Select(c => c.Title.PrimaryTitle).Distinct().ToList(),
+                CrewsCharacter = n.CrewCharacters.Select(c=>c.CharacterDescription).Distinct().ToList(),
+                Crews = n.Crews.Select(c=>c.Category.CategoryName).Distinct().ToList(),
+               
+
+            })
+            .FirstOrDefaultAsync();
+            
     }
 }
