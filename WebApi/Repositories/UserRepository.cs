@@ -23,9 +23,14 @@ public class UserRepository : IUserRepository
         return await _context.Users
             .ToListAsync();
     }
+    // Is ID not a string in the database?
     public async Task<User?> GetUserById(int id)
     {
         return await _context.Users.FirstOrDefaultAsync(e=>e.UserId == id);
+    }
+    public async Task<User?> GetUserByUserName(string userName)
+    {
+        return await _context.Users.FirstOrDefaultAsync(e=>e.UserName == userName);
     }
 
     public async Task<User?> CreateUser(User user)

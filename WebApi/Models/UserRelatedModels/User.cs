@@ -20,7 +20,9 @@ public class User
     
     [Column("user_email")]
     public string UserEmail { get; set; }
-
+    
+    [Column("salt")]
+    public string Salt { get; set; }
     public IList<Has?> Has {  get; set; }
 
 

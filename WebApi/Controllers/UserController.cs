@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using WebApi.Controllers;
 using WebApi.DTO.TitleDtos;
 using WebApi.DTO.UserDtos;
 using WebApi.Interfaces;
 using WebApi.Mappers;
 using WebApi.Models.TitleRelatedModels;
+using WebApi.Services;
 
 namespace WebApi.Controller;
 
@@ -14,11 +19,18 @@ public class UserController : BaseController
 {
     private readonly IUserRepository _userRepo;
     private readonly LinkGenerator _linkGenerator;
+    private readonly IConfiguration _configuration;
+    private readonly Hashing _hashing;
 
-    public UserController(IUserRepository UserRepo, LinkGenerator linkGenerator) : base(linkGenerator)
+    public UserController(IUserRepository UserRepo, 
+                          LinkGenerator linkGenerator,
+                          IConfiguration configuration,
+                          Hashing hashing) : base(linkGenerator)
     {
         _userRepo = UserRepo;
         _linkGenerator = linkGenerator;
+        _configuration = configuration;
+        _hashing = hashing;
     }
 
 
@@ -45,12 +57,48 @@ public class UserController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser([FromBody] CreateUserDto CreateUserDto)
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserDto createUserDto)
     {
-        var user = CreateUserDto.FromCreateUserDtoToUser();
+        if (await _userRepo.GetUserByUserName(createUserDto.UserName) != null){
+            return BadRequest();
+        }
+        if (string.IsNullOrWhiteSpace(createUserDto.UserPassword)){
+            return BadRequest();
+        }
+        (var hashedPwd, var salt) = _hashing.Hash(createUserDto.UserPassword);
+        var user = createUserDto.FromCreateUserDtoToUser();
+        user.UserPassword = hashedPwd;
+        user.Salt = salt;
         await _userRepo.CreateUser(user);
-
         return CreatedAtAction(nameof(GetUserById), new { id = user.UserId }, user.ToUserDto());
+
+    }
+
+    [HttpPut]
+    public IActionResult Login(LoginUserDTO dto){
+        var user = _userRepo.GetUserByUserName(dto.UserName);
+
+        if (user == null) { return BadRequest(); }
+        if (!_hashing.Verify(dto.Password, user.Result.UserPassword, user.Result.Salt)){ return BadRequest(); }
+
+        var claims = new List<Claim> { 
+            new Claim(ClaimTypes.Name, user.Result.UserName)
+        };
+
+        var secret = _configuration.GetSection("Auth:Secret").Value;
+
+        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secret));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+        var token = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.Now.AddSeconds(60),
+            signingCredentials: creds
+        );
+
+        var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return Ok(new { userName = user.Result.UserName, token = jwt });
     }
 
     [HttpDelete("{id}")]
@@ -93,8 +141,5 @@ public class UserController : BaseController
         if (bookmark == null) return NotFound();    
         return Ok(bookmark);
     }
-
-
-    //TODO: All the Crud Operations ( Create User, Read User, Put User, Delete User)
 }
 

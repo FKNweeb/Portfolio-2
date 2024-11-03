@@ -1,28 +1,25 @@
 @WebApi_HostAddress = http://localhost:5001
 
-GET {{WebApi_HostAddress}}/api/categories
+POST {{WebApi_HostAddress}}/api/users
 Accept: application/json
-
-###
-
-GET {{WebApi_HostAddress}}/api/categories/1
-
-###
-POST {{WebApi_HostAddress}}/api/categories
 Content-Type: application/json
-{
-    "name": "test",
-    "description": "test"
-}
 
-###
-PUT {{WebApi_HostAddress}}/api/categories/1111
-Content-Type: application/json
 {
-    "name": "test",
-    "description": "test"
+    "UserName": "Zainab",
+    "UserPassword": "1234",
+    "UserEmail": "Zainab@ruc"
 }
 
 ###
 
-DELETE {{WebApi_HostAddress}}/api/categories/1
+PUT {{WebApi_HostAddress}}/api/users
+Accept: application/json
+Content-Type: application/json
+
+{
+    "UserName": "Zainab",
+    "Password": "1234"
+}
+
+###
+
