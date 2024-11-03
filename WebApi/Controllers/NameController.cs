@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 using WebApi.Data;
+using WebApi.DTO.NameDtos;
 using WebApi.Interfaces;
 using WebApi.Mappers;
 
@@ -25,9 +26,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet(Name =nameof(GetAllNames))]
-        public async Task<IActionResult> GetAllNames(int page=0, int pageSize=25)
+        public async Task<IActionResult> GetAllNames([FromQuery] QueryName query, int page=0, int pageSize=25)
         {
-            var names = await _nameRepo.GetAllNamesAsync(page, pageSize);
+            var names = await _nameRepo.GetAllNamesAsync(query, page, pageSize);
             if(names == null) {return NotFound();}
 
             var total = _nameRepo.NumberOfName();
