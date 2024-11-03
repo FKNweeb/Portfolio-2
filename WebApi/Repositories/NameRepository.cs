@@ -116,8 +116,8 @@ public class NameRepository : INameRepository
         return await _context.StructuredNameSearch(title, plot, character, person).ToListAsync();
     }
 
-    public Task<Name> FindCoPlayers(string nameId)
+    public async Task<List<FindCoPlayersResults>> FindCoPlayers(string nconst)
     {
-        throw new NotImplementedException();
+       return await _context.FindCoPlayers(nconst).ToListAsync();
     }
 }

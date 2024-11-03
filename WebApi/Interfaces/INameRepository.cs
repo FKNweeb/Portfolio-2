@@ -13,7 +13,7 @@ public interface INameRepository
 
     Task<List<NameSearchResults>> SearchForName(string title, string plot, string character, string person);
 
-    Task<Name> FindCoPlayers(string nameId);
+    Task<List<FindCoPlayersResults>> FindCoPlayers(string nconst);
     
     
     

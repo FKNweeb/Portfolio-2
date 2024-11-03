@@ -157,6 +157,9 @@ public class ImdbContext : DbContext
 
         modelBuilder.HasDbFunction(() => StructuredNameSearch(default, default, default, default))
             .HasName("structured_string_search_name");
+
+        modelBuilder.HasDbFunction(() => FindCoPlayers(default))
+            .HasName("finding_co_players");
     }
 
     public IQueryable<SearchResult> StringSearch (string keyword)
@@ -177,6 +180,9 @@ public class ImdbContext : DbContext
 
     public IQueryable<NameSearchResults> StructuredNameSearch(string title, string plot, string character, string person)
         =>FromExpression(()=> StructuredNameSearch(title, plot, character, person));
+
+    public IQueryable<FindCoPlayersResults> FindCoPlayers(string nconst)
+        => FromExpression(() => FindCoPlayers(nconst));
 
     public DbSet<Title> Titles { get; set; }
 
@@ -232,4 +238,6 @@ public class ImdbContext : DbContext
     public DbSet<BestMatch> BestMatches { get; set; }
 
     public DbSet<NameSearchResults> NameSearchResults { get; set; }
+
+    public DbSet<FindCoPlayersResults> CoPlayersResults { get; set; }
 }

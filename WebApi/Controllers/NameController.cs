@@ -58,6 +58,14 @@ namespace WebApi.Controllers
             return Ok(names);
         }
 
+        [HttpGet("searchcoplayer/{nameId}")]
+        public async Task<IActionResult> SearForCoPlayers([FromRoute] string nameId)
+        {
+            var names = await _nameRepo.FindCoPlayers(nameId);
+            if (names == null) { return NotFound(); }
+            return Ok(names);
+        }
+
         //[HttpGet("{id}")]
         //public IActionResult GetNameById([FromRoute] string id )
         //{
