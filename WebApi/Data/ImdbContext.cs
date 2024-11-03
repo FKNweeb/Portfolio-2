@@ -154,6 +154,9 @@ public class ImdbContext : DbContext
 
         modelBuilder.HasDbFunction(() => SimilarTitles(default))
             .HasName("similar_movies");
+
+        modelBuilder.HasDbFunction(() => StructuredNameSearch(default, default, default, default))
+            .HasName("structured_string_search_name");
     }
 
     public IQueryable<SearchResult> StringSearch (string keyword)
@@ -171,6 +174,9 @@ public class ImdbContext : DbContext
 
     public IQueryable<SearchResult> SimilarTitles(string keyword)
         => FromExpression(() => SimilarTitles(keyword));
+
+    public IQueryable<NameSearchResults> StructuredNameSearch(string title, string plot, string character, string person)
+        =>FromExpression(()=> StructuredNameSearch(title, plot, character, person));
 
     public DbSet<Title> Titles { get; set; }
 
@@ -224,4 +230,6 @@ public class ImdbContext : DbContext
     public DbSet<SearchResult> SearchResults { get; set; }
 
     public DbSet<BestMatch> BestMatches { get; set; }
+
+    public DbSet<NameSearchResults> NameSearchResults { get; set; }
 }
