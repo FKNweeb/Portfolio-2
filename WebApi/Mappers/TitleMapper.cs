@@ -27,7 +27,6 @@ public static class TitleMapper
             //Type = titleObject.TitleIsType?.TypeOfTitle?.ToString(),
             Type = !string.IsNullOrEmpty(titleObject.TitleIsType?.TypeOfTitle) ? titleObject.TitleIsType.TypeOfTitle.ToString() : null,
 
-
         }; ;
     }
 

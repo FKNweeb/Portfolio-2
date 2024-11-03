@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WebApi.Data;
+using WebApi.DTO.NameDtos;
 using WebApi.Interfaces;
 using WebApi.Models.NameRelatedModels;
 using WebApi.Models.TitleRelatedModels;
@@ -15,10 +17,26 @@ public class NameRepository : INameRepository
         _context = context;
     }
 
-    public async Task<List<Name>> GetAllNamesAsync()
-    { 
-        return await _context.Names.ToListAsync();
+    public async Task<List<GetAllNameDTO>> GetAllNamesAsync(int page, int pageSize)
+    {
+        return await _context.Names
+            .Include(tk=>tk.KnownForTitles)
+                .ThenInclude(t=>t.Title)
+            .Include(p=>p.ProfessionNames)
+                .ThenInclude(p=>p.Profession)
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .Select(n => new GetAllNameDTO
+            {
+                Name  = n.PrimaryName,
+                BirthYear = n.BirthYear,
+                DeathYear = n.DeathYear,
+                KnownForTitles = n.KnownForTitles.Select(g=>g.Title.PrimaryTitle).ToList(),
+                Professions = n.ProfessionNames.Select(p=>p.Profession.ProfessionTitle).ToList(),
+            })
+            .ToListAsync();
     }
+          
 
     public async Task<List<Name>> GetAllKnownForTitle(int page, int pageSize){
         return await _context.Names

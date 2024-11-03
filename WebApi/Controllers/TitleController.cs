@@ -201,4 +201,8 @@ public class TitleController : BaseController
         return Ok(titlesDto);
         
     }
+    
+    //TODO: Datavalidation
+    //TODO: We could also implement for every endpoint sorting 
+    //TODO: We should implement paging for every endpoint 
 }

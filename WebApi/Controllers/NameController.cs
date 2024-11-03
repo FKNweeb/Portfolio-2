@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 using WebApi.Data;
 using WebApi.Interfaces;
 using WebApi.Mappers;
@@ -23,13 +24,17 @@ namespace WebApi.Controllers
             _linkGenerator = linkGenerator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllNames()
+        [HttpGet(Name =nameof(GetAllNames))]
+        public async Task<IActionResult> GetAllNames(int page=0, int pageSize=25)
         {
-            var titles = await _nameRepo.GetAllNamesAsync();
-            var titlesDto = titles.Select(s => s.ToGetAllNameDTO());
+            var names = await _nameRepo.GetAllNamesAsync(page, pageSize);
+            if(names == null) {return NotFound();}
 
-            return Ok(titlesDto);
+            var total = _nameRepo.NumberOfName();
+
+            object result = CreatePaging(nameof(GetAllNames), page, pageSize, total, names);
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
@@ -40,19 +45,9 @@ namespace WebApi.Controllers
 
             return Ok(title);
         }
-        [HttpGet("KnownForTitle", Name =(nameof(GetAllKnownForTitle)))]
-        public async Task<IActionResult> GetAllKnownForTitle(int page = 0, int pageSize = 25){
-            var kft = await _nameRepo.GetAllKnownForTitle(page, pageSize);
-            var total = _context.Names.Count();
-            object result = CreatePaging(
-                nameof(GetAllKnownForTitle),
-                page,
-                pageSize,
-                total,
-                kft
-            );
-            return Ok(result);
-        }
+
+
+       
 
         [HttpGet("profession", Name =(nameof(GetNameAndProfession)))]
         public async Task<IActionResult> GetNameAndProfession(int page = 0, int pageSize = 25){

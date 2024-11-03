@@ -9,9 +9,11 @@ public static class NameMapper
     {
         return new GetAllNameDTO
         {
-            Name = nameObject.NameId,
+            Name = nameObject.PrimaryName,
             BirthYear = nameObject.BirthYear,
-            DeathYear = nameObject.DeathYear
+            DeathYear = nameObject.DeathYear,
+            KnownForTitles = nameObject.KnownForTitles?.Select(t=>t.Title.PrimaryTitle).ToList(),
+            Professions = nameObject.ProfessionNames?.Select(p=>p.ProfessionTitle).ToList(),
         };
     }
 }
