@@ -36,8 +36,9 @@ builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 var secret = builder.Configuration.GetSection("Auth:Secret").Value;
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(option => 
-        option.TokenValidationParameters = new TokenValidationParameters{
+    .AddJwtBearer(option =>
+        option.TokenValidationParameters = new TokenValidationParameters
+        {
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateIssuerSigningKey = true,
