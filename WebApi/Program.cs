@@ -35,16 +35,17 @@ builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 
 var secret = builder.Configuration.GetSection("Auth:Secret").Value;
 
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(option => 
-//        option.TokenValidationParameters = new TokenValidationParameters{
-//            ValidateIssuer = false,
-//            ValidateAudience = false,
-//            ValidateIssuerSigningKey = true,
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
-//            ClockSkew = TimeSpan.Zero
-//        }
-//    );
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(option =>
+        option.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
+            ClockSkew = TimeSpan.Zero
+        }
+    );
 
 var app = builder.Build();
 
