@@ -119,28 +119,13 @@ public class UserController : BaseController
         return Ok(history);
     }
 
-    [HttpGet("ratename", Name = (nameof(GetRateNameAndName)))]
-    public async Task<IActionResult> GetRateNameAndName(int page = 0, int pageSize = 25)
+    [HttpPost("bookmarkName")]
+    public async Task<IActionResult> SetBookmarkName([FromRoute] int userId, string name)
     {
-        var kft = await _userRepo.GetRateNameAndNameAsync(page, pageSize);
-        var total = _userRepo.NumberOfUsers();
-
-        object result = CreatePaging(
-            nameof(GetRateNameAndName),
-            page,
-            pageSize,
-            total,
-            kft
-            );
-        return Ok(result);
-    }
-
-    [HttpGet("bookmark/{id}")]
-    public async Task<IActionResult> GetBookMarkByUser(int id)
-    {
-        var bookmark = await _userRepo.GetUsersBookmarksForName(id);
-        if (bookmark == null) return NotFound();    
+        var bookmark = await _userRepo.SetBookmarkName(userId, name);
+        if(bookmark == null) return NotFound();
         return Ok(bookmark);
+
     }
 }
 

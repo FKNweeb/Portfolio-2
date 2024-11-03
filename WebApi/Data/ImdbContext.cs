@@ -184,6 +184,8 @@ public class ImdbContext : DbContext
     public IQueryable<FindCoPlayersResults> FindCoPlayers(string nconst)
         => FromExpression(() => FindCoPlayers(nconst));
 
+    
+
     public DbSet<Title> Titles { get; set; }
 
     public DbSet<TitleKnownAs> KnowAs { get; set; }

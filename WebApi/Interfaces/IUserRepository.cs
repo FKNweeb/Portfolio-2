@@ -12,11 +12,19 @@ public interface IUserRepository
 
     Task<User?> DeleteUser(int id);
 
-    Task<List<User?>> GetHistory();
+    Task<List<SearchHistory>> GetHistory();
 
-    Task<List<User>> GetRateNameAndNameAsync(int page, int pageSize);
+    Task<bool> UpdateSearchHistory(string keyword);
 
-    Task<User?> GetUsersBookmarksForName(int id);
+    Task<BookMarkName?> SetBookmarkName(int userId, string name);
+    Task<bool> DeleteBookmarkName();
+
+    Task<bool> SetBookarkTitle();
+    Task<bool> DeleteBookMarkTitle();
+
+    Task<bool> RateName();
+    Task<bool> RateTitle();
+
     int NumberOfUsers();
 }
 

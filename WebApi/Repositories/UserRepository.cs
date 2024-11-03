@@ -12,10 +12,12 @@ namespace WebApi.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly ImdbContext _context;
+    private readonly INameRepository _nameRepository;
 
-    public UserRepository(ImdbContext context)
+    public UserRepository(ImdbContext context, INameRepository nameRepository)
     {
         _context = context;
+        _nameRepository = nameRepository;
     }
 
     public async Task<List<User>> GetAllAsync()
@@ -69,26 +71,68 @@ public class UserRepository : IUserRepository
         return _context.Users.Count();
     }
 
-    public async Task<List<User?>> GetHistory()
+    public async Task<List<SearchHistory>> GetHistory()
     {
-        return await _context.Users
-            .Include(h => h.Has)
-            .ThenInclude(s => s.SearchHistory)
+        return await _context.SearchHistories
             .ToListAsync();
     }
+    public async Task<bool> UpdateSearchHistory(string keyword)
+    { 
+        var lastrecord = await _context.SearchHistories.MaxAsync(u => u.HistoryId);
 
-    public async Task<User?> GetUsersBookmarksForName(int id)
-    {
-        return await _context.Users
-            .Include(b=>b.BookMarkNames)
-            .Include(r=>r.RateNames)
-                .ThenInclude(l=>l.LocalNameRating)
-            .Include(b=>b.BookMarkTitles)
-            .Include(r=>r.RateTitles)
-                .ThenInclude(l=>l.LocalTitleRating)
-            .FirstOrDefaultAsync(i=>i.UserId == id);
-            
+        var SearchEntry = new SearchHistory
+        {
+            HistoryId = (int)lastrecord + 1,
+            Description = keyword
+        };
+
+        await _context.SearchHistories.AddAsync(SearchEntry);
+        await _context.SaveChangesAsync();
+
+        return await _context.SearchHistories.MaxAsync(u => u.HistoryId) > lastrecord;
     }
 
-  
+    public async Task<BookMarkName?> SetBookmarkName(int userId, string name)
+    {
+        throw new NotImplementedException();    
+    }
+
+    public Task<bool> DeleteBookmarkName()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> SetBookarkTitle()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> DeleteBookMarkTitle()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> RateName()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> RateTitle()
+    {
+        throw new NotImplementedException();
+    }
+
+    //public async Task<User?> GetUsersBookmarksForName(int id)
+    //{
+    //    return await _context.Users
+    //        .Include(b=>b.BookMarkNames)
+    //        .Include(r=>r.RateNames)
+    //            .ThenInclude(l=>l.LocalNameRating)
+    //        .Include(b=>b.BookMarkTitles)
+    //        .Include(r=>r.RateTitles)
+    //            .ThenInclude(l=>l.LocalTitleRating)
+    //        .FirstOrDefaultAsync(i=>i.UserId == id);
+
+    //}
+
 }
