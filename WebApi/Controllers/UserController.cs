@@ -56,7 +56,7 @@ public class UserController : BaseController
         return Ok(userDto);
     }
 
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserDto createUserDto)
     {
         if (await _userRepo.GetUserByUserName(createUserDto.UserName) != null){
@@ -74,7 +74,7 @@ public class UserController : BaseController
 
     }
 
-    [HttpPut]
+    [HttpPut("login")]
     public IActionResult Login(LoginUserDTO dto){
         var user = _userRepo.GetUserByUserName(dto.UserName);
 
