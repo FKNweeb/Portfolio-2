@@ -17,24 +17,54 @@ public class NameRepository : INameRepository
         _context = context;
     }
 
-    public async Task<List<GetAllNameDTO>> GetAllNamesAsync(int page, int pageSize)
+    public async Task<List<GetAllNameDTO>> GetAllNamesAsync(QueryName query,int page, int pageSize)
     {
-        return await _context.Names
-            .Include(tk=>tk.KnownForTitles)
-                .ThenInclude(t=>t.Title)
-            .Include(p=>p.ProfessionNames)
-                .ThenInclude(p=>p.Profession)
+        //return await _context.Names
+        //    .Include(tk=>tk.KnownForTitles)
+        //        .ThenInclude(t=>t.Title)
+        //    .Include(p=>p.ProfessionNames)
+        //        .ThenInclude(p=>p.Profession)
+        //    .Skip(page * pageSize)
+        //    .Take(pageSize)
+        //    .Select(n => new GetAllNameDTO
+        //    {
+        //        Name  = n.PrimaryName,
+        //        BirthYear = n.BirthYear,
+        //        DeathYear = n.DeathYear,
+        //        KnownForTitles = n.KnownForTitles.Select(g=>g.Title.PrimaryTitle).ToList(),
+        //        Professions = n.ProfessionNames.Select(p=>p.Profession.ProfessionTitle).ToList(),
+        //    })
+        //    .ToListAsync();
+
+        var queryable = _context.Names
+             .Include(tk => tk.KnownForTitles)
+             .ThenInclude(t => t.Title)
+             .Include(p => p.ProfessionNames)
+             .ThenInclude(p => p.Profession)
+             .AsQueryable();
+
+        if(!string.IsNullOrWhiteSpace(query.SortBy))
+        {
+            if(query.SortBy == "name")
+            {
+                queryable = query.IsDescending ? queryable.OrderByDescending(n=>n.PrimaryName)
+                        : queryable.OrderBy(n => n.PrimaryName);
+            }
+        }
+
+        var names = await queryable
             .Skip(page * pageSize)
             .Take(pageSize)
-            .Select(n => new GetAllNameDTO
+            .Select(n=> new GetAllNameDTO
             {
-                Name  = n.PrimaryName,
+                Name = n.PrimaryName,
                 BirthYear = n.BirthYear,
                 DeathYear = n.DeathYear,
-                KnownForTitles = n.KnownForTitles.Select(g=>g.Title.PrimaryTitle).ToList(),
-                Professions = n.ProfessionNames.Select(p=>p.Profession.ProfessionTitle).ToList(),
-            })
-            .ToListAsync();
+                KnownForTitles = n.KnownForTitles.Select(g => g.Title.PrimaryTitle).ToList(),
+                Professions = n.ProfessionNames.Select(p => p.Profession.ProfessionTitle).ToList(),
+            }).ToListAsync();
+
+        return names;
     }
           
 
