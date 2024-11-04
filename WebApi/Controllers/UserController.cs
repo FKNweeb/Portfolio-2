@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
@@ -120,10 +121,18 @@ public class UserController : BaseController
     }
 
     [HttpPost("bookmarkName")]
-    public async Task<IActionResult> SetBookmarkName([FromRoute] int userId, string name)
+    [Authorize]
+    public async Task<IActionResult> SetBookmarkName([FromBody] BookmarkNameDTO dto)
     {
-        var bookmark = await _userRepo.SetBookmarkName(userId, name);
+        var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+        if (userName == null) { return Unauthorized(); }
+
+        var userId = _userRepo.GetUserByUserName(userName).Result.UserId;
+        if (userId == null) { return Unauthorized(); }
+
+        var bookmark = await _userRepo.SetBookmarkName(userId, dto.NameId);
         if(bookmark == null) return NotFound();
+
         return Ok(bookmark);
 
     }

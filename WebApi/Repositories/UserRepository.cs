@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Interfaces;
+using WebApi.Models.FunctionBasedModels;
 using WebApi.Models.NameRelatedModels;
 using WebApi.Models.TitleRelatedModels;
 using WebApi.Models.UserRelatedModels;
@@ -92,9 +93,13 @@ public class UserRepository : IUserRepository
         return await _context.SearchHistories.MaxAsync(u => u.HistoryId) > lastrecord;
     }
 
-    public async Task<BookMarkName?> SetBookmarkName(int userId, string name)
+    public async Task<SetBookmarkName> SetBookmarkName(int userId, string nameId)
     {
-        throw new NotImplementedException();    
+        var result = await _context.Set<SetBookmarkName>()
+                             .FromSqlInterpolated($"SELECT set_bookmark_name({userId}, {nameId}) AS \"IsBookmarkName\"")
+                             .FirstOrDefaultAsync();
+        return result;
+    
     }
 
     public Task<bool> DeleteBookmarkName()

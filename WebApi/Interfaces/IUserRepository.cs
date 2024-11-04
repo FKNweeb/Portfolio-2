@@ -1,4 +1,5 @@
-﻿using WebApi.Models.NameRelatedModels;
+﻿using WebApi.Models.FunctionBasedModels;
+using WebApi.Models.NameRelatedModels;
 using WebApi.Models.TitleRelatedModels;
 using WebApi.Models.UserRelatedModels;
 namespace WebApi.Interfaces;
@@ -16,7 +17,7 @@ public interface IUserRepository
 
     Task<bool> UpdateSearchHistory(string keyword);
 
-    Task<BookMarkName?> SetBookmarkName(int userId, string name);
+    Task<SetBookmarkName> SetBookmarkName(int userId, string nameId);
     Task<bool> DeleteBookmarkName();
 
     Task<bool> SetBookarkTitle();
