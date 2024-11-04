@@ -102,6 +102,15 @@ public class UserRepository : IUserRepository
     
     }
 
+    public async Task<SetBookmarkTitle> SetBookmarkTitle(int userId, string titleId)
+    {
+        var result = await _context.Set<SetBookmarkTitle>()
+                             .FromSqlInterpolated($"SELECT set_bookmark_title({userId}, {titleId}) AS \"IsBookmarkTitle\"")
+                             .FirstOrDefaultAsync();    
+        return result;
+    
+    }
+
     public Task<bool> DeleteBookmarkName()
     {
         throw new NotImplementedException();

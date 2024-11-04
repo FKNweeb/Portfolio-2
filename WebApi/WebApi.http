@@ -32,4 +32,13 @@ Content-Type: application/json
     "nameId" : "nm0000030"
 }
 
+###
 
+POST {{WebApi_HostAddress}}/api/users/bookmarkTitle
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiWmFpbmFiIiwiZXhwIjoxNzMwODAyNDc0fQ.e378X5D2SNGlv30hIxrsA4M2vpw9ekxXRMv6cZtuWe4
+Content-Type: application/json
+
+{
+    "TitleId" : "tt25154648"
+}

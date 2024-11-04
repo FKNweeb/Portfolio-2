@@ -128,13 +128,26 @@ public class UserController : BaseController
         if (userName == null) { return Unauthorized(); }
 
         var userId = _userRepo.GetUserByUserName(userName).Result.UserId;
-        if (userId == null) { return Unauthorized(); }
 
         var bookmark = await _userRepo.SetBookmarkName(userId, dto.NameId);
         if(bookmark == null) return NotFound();
 
         return Ok(bookmark);
+    }
 
+    [HttpPost("bookmarkTitle")]
+    [Authorize]
+    public async Task<IActionResult> SetBookmarkTitle([FromBody] BookmarkTitleDTO dto)
+    {
+        var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+        if (userName == null) { return Unauthorized(); }
+
+        var userId = _userRepo.GetUserByUserName(userName).Result.UserId;
+
+        var bookmark = await _userRepo.SetBookmarkTitle(userId, dto.TitleId);
+        if(bookmark == null) return NotFound();
+
+        return Ok(bookmark);
     }
 }
 

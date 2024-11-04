@@ -1,5 +1,3 @@
-using System;
-
 namespace WebApi.DTO.UserDtos;
 
 public class BookmarkNameDTO

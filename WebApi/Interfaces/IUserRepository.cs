@@ -18,6 +18,7 @@ public interface IUserRepository
     Task<bool> UpdateSearchHistory(string keyword);
 
     Task<SetBookmarkName> SetBookmarkName(int userId, string nameId);
+    Task<SetBookmarkTitle> SetBookmarkTitle(int userId, string titleId);
     Task<bool> DeleteBookmarkName();
 
     Task<bool> SetBookarkTitle();
