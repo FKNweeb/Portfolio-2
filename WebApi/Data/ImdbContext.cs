@@ -166,6 +166,12 @@ public class ImdbContext : DbContext
 
         modelBuilder.HasDbFunction(() => Set_Bookmark_Title(default, default))
             .HasName("set_bookmark_title");
+
+        modelBuilder.HasDbFunction(() => SetRatename(default, default, default))
+           .HasName("set_rate_name");
+
+        modelBuilder.HasDbFunction(() => SetRatetitle(default, default, default))
+            .HasName("set_rate_title");
     }
 
     public IQueryable<SearchResult> StringSearch (string keyword)
@@ -195,6 +201,12 @@ public class ImdbContext : DbContext
     
     public IQueryable<SetBookmarkTitle> Set_Bookmark_Title(int userId, string titleId)
         => FromExpression(() => Set_Bookmark_Title(userId, titleId));
+
+    public IQueryable<SetRateName> SetRatename(int userId, string nameId, int vote)
+        => FromExpression(() => SetRatename(userId, nameId, vote));
+
+    public IQueryable<SetRateTitle> SetRatetitle(int userId, string titleId, int vote) 
+        => FromExpression(()=> SetRatetitle(userId, titleId, vote));
 
     public DbSet<Title> Titles { get; set; }
 
@@ -254,4 +266,9 @@ public class ImdbContext : DbContext
     public DbSet<FindCoPlayersResults> CoPlayersResults { get; set; }
     public DbSet<SetBookmarkName> SetBookmarkNames { get; set; }
     public DbSet<SetBookmarkTitle> SetBookmarkTitles { get; set; }
+
+    public DbSet<SetRateName> SetRateNames { get; set; }
+
+    public DbSet<SetRateTitle> SetRateTitles { get; set; }
+
 }

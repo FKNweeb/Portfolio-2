@@ -24,8 +24,8 @@ public interface IUserRepository
 
     Task<bool> DeleteBookMarkTitle(int userId, string titleId);
 
-    Task<bool> RateName();
-    Task<bool> RateTitle();
+    Task<SetRateName> RateName(int userId, string nameId, int vote);
+    Task<SetRateTitle> RateTitle(int userId, string titleId, int vote);
 
     int NumberOfUsers();
 }

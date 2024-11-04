@@ -6,6 +6,7 @@ using WebApi.Models.FunctionBasedModels;
 using WebApi.Models.NameRelatedModels;
 using WebApi.Models.TitleRelatedModels;
 using WebApi.Models.UserRelatedModels;
+using static Azure.Core.HttpHeader;
 
 
 namespace WebApi.Repositories;
@@ -141,27 +142,22 @@ public class UserRepository : IUserRepository
         return true;
     }
 
-    public Task<bool> RateName()
+    public async Task<SetRateName> RateName(int userId, string nameId, int vote)
     {
-        throw new NotImplementedException();
+        var result = await _context.Set<SetRateName>()
+                              .FromSqlInterpolated($"SELECT set_rate_name({userId},{nameId},{vote}) AS \"IsSetRateName\"")
+                              .FirstOrDefaultAsync();
+        return result;
     }
 
-    public Task<bool> RateTitle()
+    public async Task<SetRateTitle> RateTitle(int userId, string titleId, int vote)
     {
-        throw new NotImplementedException();
+        var result = await _context.Set<SetRateTitle>()
+                              .FromSqlInterpolated($"SELECT set_rate_title({userId},{titleId},{vote}) AS \"IsSetRateTitle\"")
+                              .FirstOrDefaultAsync();
+        return result;
     }
 
-    //public async Task<User?> GetUsersBookmarksForName(int id)
-    //{
-    //    return await _context.Users
-    //        .Include(b=>b.BookMarkNames)
-    //        .Include(r=>r.RateNames)
-    //            .ThenInclude(l=>l.LocalNameRating)
-    //        .Include(b=>b.BookMarkTitles)
-    //        .Include(r=>r.RateTitles)
-    //            .ThenInclude(l=>l.LocalTitleRating)
-    //        .FirstOrDefaultAsync(i=>i.UserId == id);
-
-    //}
+   
 
 }

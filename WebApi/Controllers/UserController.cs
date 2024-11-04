@@ -180,5 +180,35 @@ public class UserController : BaseController
 
         return Ok(bookmark);
     }
+
+    [HttpPost("rateName")]
+    [Authorize]
+    public async Task<IActionResult> RateName([FromBody] RateNameDto dto)
+    {
+        var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+        if (userName == null) { return Unauthorized(); }
+
+        var userId = _userRepo.GetUserByUserName(userName).Result.UserId;
+
+        var rate = await _userRepo.RateName(userId, dto.NameId, dto.Rate);
+        if (rate == null) return NotFound();
+
+        return Ok(rate);
+    }
+
+    [HttpPost("rateTitle")]
+    [Authorize]
+    public async Task<IActionResult> RateTitle([FromBody] RateTitleDto dto)
+    {
+        var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+        if (userName == null) { return Unauthorized(); }
+
+        var userId = _userRepo.GetUserByUserName(userName).Result.UserId;
+
+        var rate = await _userRepo.RateTitle(userId, dto.TitleId, dto.Rate);
+        if (rate == null) return NotFound();
+
+        return Ok(rate);
+    }
 }
 
