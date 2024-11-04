@@ -18,15 +18,6 @@ public class TitleRepository : ITitlteRepository
     {
         _context = context;
     }
-
-
-    /// <summary>
-    /// Retrives a paginated ilst of titles that have a non-null plot.
-    /// </summary>
-    /// <param name="page">The number of the page to retrive</param>
-    /// <param name="pageSize">The number of titles to retrive per page.</param>
-    /// <returns>A task that represent the asynchronus operation. The 
-    /// task result contains a list of objects.</returns>
     public async Task<List<Title>> GetAllAsync(int page, int pageSize)
     {
         return await _context.Titles
@@ -84,13 +75,6 @@ public class TitleRepository : ITitlteRepository
     }
 
 
-    /// <summary>
-    /// Takes a string as parameter and returns the titleId and the primary title of titles that the string matches either their primary title or the plot
-    /// </summary>
-    /// <param name="keyword1"></param>
-    /// <param name="page"></param>
-    /// <param name="pageSize"></param>
-    /// <returns></returns>
     public async Task<List<SearchResult>> SearchWithKeyword(string keyword, int page, int pageSize)
     {
         return await _context.StringSearch(keyword)
