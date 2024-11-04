@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using WebApi.Models.FunctionBasedModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Numerics;
-using WebApi.Data;
 using WebApi.DTO.TitleDtos;
 using WebApi.Interfaces;
 using WebApi.Mappers;
-using WebApi.Models.FunctionBasedModels;
-using WebApi.Models.TitleRelatedModels;
 
 
 namespace WebApi.Controllers;
