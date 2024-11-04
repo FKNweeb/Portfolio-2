@@ -111,10 +111,21 @@ public class UserRepository : IUserRepository
     
     }
 
-    public Task<bool> DeleteBookmarkName()
+    
+    public async Task<bool> DeleteBookmarkName(int userId, string nameId)
     {
-        throw new NotImplementedException();
+        var bookmark = await _context.bookMarkNames.FirstOrDefaultAsync(n=>n.UserId == userId && n.NameId == nameId);
+
+        if (bookmark == null)
+        {
+            return false;
+        }
+
+        _context.bookMarkNames.Remove(bookmark);
+        await _context.SaveChangesAsync();
+        return true;
     }
+   
 
     public Task<bool> SetBookarkTitle()
     {
