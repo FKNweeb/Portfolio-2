@@ -164,5 +164,21 @@ public class UserController : BaseController
         if(!bookmark) { return NotFound(); }
         return Ok(bookmark);
     }
+
+    [HttpDelete("deletebookmarkTitle")]
+    [Authorize]
+    public async Task<IActionResult> DeleteBookmarkTitle([FromBody] BookmarkTitleDTO dto)
+    {
+        var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+        if (userName == null) { return Unauthorized(); }
+
+        var userId = _userRepo.GetUserByUserName(userName).Result.UserId;
+        if (userId == null) { return Unauthorized(); }
+
+        var bookmark = await _userRepo.DeleteBookMarkTitle(userId, dto.TitleId);
+        if(bookmark == null) { return NotFound(); }
+
+        return Ok(bookmark);
+    }
 }
 

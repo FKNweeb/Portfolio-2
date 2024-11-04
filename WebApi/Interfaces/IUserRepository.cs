@@ -22,8 +22,7 @@ public interface IUserRepository
     
     Task<bool> DeleteBookmarkName(int userId, string nameId);
 
-    Task<bool> SetBookarkTitle();
-    Task<bool> DeleteBookMarkTitle();
+    Task<bool> DeleteBookMarkTitle(int userId, string titleId);
 
     Task<bool> RateName();
     Task<bool> RateTitle();

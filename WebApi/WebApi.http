@@ -33,9 +33,9 @@ Content-Type: application/json
 
 ###
 
-DELETE {{WebApi_HostAddress}}/api/users/bookmarkName
+DELETE {{WebApi_HostAddress}}/api/users/deletebookmarName
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImV4cCI6MTczMDgwNjIxNn0.7pwUyO6dLz_rtr8ZlLz7R1fFyV1xcBbFDstcdeZCAcA"D2SNGlv30hIxrsA4M2vpw9ekxXRMv6cZtuWe4
+Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImV4cCI6MTczMDgwNjQwNn0.PnyW0rqZUODV04hrsYdav506aP_hOFu26h96yODrvis
 Content-Type: application/json
 {
     "nameId" : "nm0000156"
@@ -45,9 +45,17 @@ Content-Type: application/json
 
 POST {{WebApi_HostAddress}}/api/users/bookmarkTitle
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiWmFpbmFiIiwiZXhwIjoxNzMwODAyNDc0fQ.e378X5D2SNGlv30hIxrsA4M2vpw9ekxXRMv6cZtuWe4
+Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImV4cCI6MTczMDgwNjQwNn0.PnyW0rqZUODV04hrsYdav506aP_hOFu26h96yODrvis
 Content-Type: application/json
+{
+    "TitleId" : "tt25154648"
+}
 
+###
+DELETE {{WebApi_HostAddress}}/api/users/deletebookmarkTitle
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImV4cCI6MTczMDgwNjQwNn0.PnyW0rqZUODV04hrsYdav506aP_hOFu26h96yODrvis
+Content-Type: application/json
 {
     "TitleId" : "tt25154648"
 }

@@ -127,14 +127,18 @@ public class UserRepository : IUserRepository
     }
    
 
-    public Task<bool> SetBookarkTitle()
-    {
-        throw new NotImplementedException();
-    }
+    
 
-    public Task<bool> DeleteBookMarkTitle()
+    public async Task<bool> DeleteBookMarkTitle(int userId, string titleId)
     {
-        throw new NotImplementedException();
+       var bookmark = await _context.bookMarkTitles.FirstOrDefaultAsync(n=>n.UserId == userId && n.TitleId == titleId);
+        if(bookmark == null)
+        {
+            return false;
+        }
+        _context.bookMarkTitles.Remove(bookmark);
+        await _context.SaveChangesAsync();
+        return true;
     }
 
     public Task<bool> RateName()
