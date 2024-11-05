@@ -1,16 +1,16 @@
 using Xunit;
 
-namespace Testing;
+namespace Testing.ControllerTest;
 
-public class TestUserController
+public class TestNameController
 {
     [Fact]
     public void TestName()
     {
         // Given
-    
+
         // When
-    
+
         // Then
     }
 }
