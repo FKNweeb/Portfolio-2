@@ -32,7 +32,6 @@ public class TitleRepository : ITitlteRepository
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToListAsync();
-
     } 
 
 

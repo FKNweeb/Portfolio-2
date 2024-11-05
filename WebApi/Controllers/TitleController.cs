@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.DTO.TitleDtos;
 using WebApi.Interfaces;
 using WebApi.Mappers;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace WebApi.Controllers;
@@ -70,7 +71,7 @@ public class TitleController : BaseController
     public async Task<IActionResult> SimilarTitles([FromRoute] string id)
     {
         var SimilarTitles = await _titleRepo.SimilarTitles(id);
-        if (SimilarTitles == null)
+        if (SimilarTitles.IsNullOrEmpty())
         {
             return NotFound();
         }
@@ -177,7 +178,7 @@ public class TitleController : BaseController
     }
 
     [HttpGet("genre/{genre}")]
-    public async Task<IActionResult> GetTitlesForGenra([FromRoute] string genre, int page=0, int pageSize = 25)
+    public async Task<IActionResult> GetTitlesForGenre([FromRoute] string genre, int page=0, int pageSize = 25)
     {
         var titles = await _genreRepository.GetTitlesBySpecificGenre(genre , page, pageSize);
 

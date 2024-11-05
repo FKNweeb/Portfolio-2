@@ -18,14 +18,9 @@ namespace Testing.ControllerTest;
 
 public class TestUserController
 {
-
-
     private const string UserApi = "http://localhost:5001/api/users";
 
-
     private readonly UserController _controller;
-
-
 
     [Fact]
     public async Task GetAllUsers_WithNoArguments_ReturnsOkResponse()
@@ -82,7 +77,7 @@ public class TestUserController
 
 }
 static class HelperExt
-    {
+{
         public static string? Value(this JsonNode node, string name)
         {
             var value = node[name];
@@ -98,5 +93,5 @@ static class HelperExt
         {
             return node.Last()?.Value(name);
         }
-    }
+}
 
