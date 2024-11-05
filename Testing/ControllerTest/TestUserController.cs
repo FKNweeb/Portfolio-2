@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using WebApi.Controller;
@@ -19,8 +21,7 @@ namespace Testing.ControllerTest;
 public class TestUserController
 {
     private const string UserApi = "http://localhost:5001/api/users";
-
-    private readonly UserController _controller;
+  
 
     [Fact]
     public async Task GetAllUsers_WithNoArguments_ReturnsOkResponse()
@@ -28,6 +29,7 @@ public class TestUserController
         var (data, statusCode) = await GetArray(UserApi);
 
         Assert.Equal(HttpStatusCode.OK, statusCode);
+
         Assert.Equal(7, data?.Count);
         Assert.Equal("1", data?.FirstElement("userId"));
         Assert.Equal("7", data?.LastElement("userId"));
@@ -50,8 +52,29 @@ public class TestUserController
     [Fact]
     public async Task GetUserById_WithArgument_NotValidId_ReturnsNotFoundResponse()
     {
-        var (_, statusCode) = await GetObject($"{UserApi}/101");
+        var (user, statusCode) = await GetObject($"{UserApi}/101");
         Assert.Equal(HttpStatusCode.NotFound, statusCode);
+    }
+
+    [Fact]
+    public async Task CreateUser_WithArgument_Valid_ReturnsCreated()
+    {
+        var newUser = new CreateUserDto
+        {   
+            UserId = 1,
+            UserName = "Test22222",
+            UserEmail = "Test222222@gmail.com",
+            UserPassword = "Testasdf",
+        };
+
+        
+        var (user, statusCode) = await PostData($"{UserApi}/create", newUser);
+
+
+        Assert.Equal(HttpStatusCode.Created, statusCode);
+
+
+        await DeleteData($"{UserApi}/{user.Value("UserId")}");
     }
 
 
@@ -71,6 +94,24 @@ public class TestUserController
         var response = client.GetAsync(url).Result;
         var data = await response.Content.ReadAsStringAsync();
         return (JsonSerializer.Deserialize<JsonObject>(data), response.StatusCode);
+    }
+
+    async Task<(JsonObject?, HttpStatusCode)> PostData(string url, object content)
+    {
+        var client = new HttpClient();
+        var requestContent = new StringContent(
+            JsonSerializer.Serialize(content),
+            Encoding.UTF8,
+            "application/json");
+        var response = await client.PostAsync(url, requestContent);
+        var data = await response.Content.ReadAsStringAsync();
+        return (JsonSerializer.Deserialize<JsonObject>(data), response.StatusCode);
+    }
+    async Task<HttpStatusCode> DeleteData(string url)
+    {
+        var client = new HttpClient();
+        var response = await client.DeleteAsync(url);
+        return response.StatusCode;
     }
 
 
