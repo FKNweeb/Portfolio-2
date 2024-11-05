@@ -57,6 +57,7 @@ public class TitleRepository : ITitlteRepository
         .Select(t => new Title
         {
             TitleId = t.TitleId,
+            PrimaryTitle = t.PrimaryTitle,
             TitlePlot = t.TitlePlot,
             TitleDate = t.TitleDate,
             TitleGenres = t.TitleGenres.Select(gn => new TitleGenre
