@@ -52,10 +52,8 @@ public class TestUserRepository
     }
 
     [Fact]
-    public async Task  GetAllUsers_NoArguments_ReturnsAllUsers()
+    public async Task GetAllUsers_NoArguments_ReturnsAllUsers()
     {
-        
-
         var users = await _userRepository.GetAllAsync();
 
         Assert.NotNull(users);

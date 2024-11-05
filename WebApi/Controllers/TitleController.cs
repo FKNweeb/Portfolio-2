@@ -155,7 +155,7 @@ public class TitleController : BaseController
         {
             return NotFound();
         }
-        var total =  _genreRepository.NumberOfTitles();
+        var total =  _genreRepository.NumberOfGenre();
 
         var titlesDto = titles.Select(t => new
         {

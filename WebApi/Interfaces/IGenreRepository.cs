@@ -5,7 +5,7 @@ namespace WebApi.Interfaces;
 
 public interface IGenreRepository
 {
-    int NumberOfTitles();
+    int NumberOfGenre();
 
     Task<List<GenreWithTitles>> GetAllTitlesByGenre(int page, int pageSize);
 

@@ -20,8 +20,8 @@ public class GenreRepository : IGenreRepository
     {
         return await _context.Genres
             .Include(g => g.TitleGenres)
-                .ThenInclude(tg => tg.Title)
-            .Skip(page *pageSize)
+            .ThenInclude(tg => tg.Title)
+            .Skip(page * pageSize)
             .Take(pageSize)
             .Select(g => new GenreWithTitles
             {
@@ -47,7 +47,7 @@ public class GenreRepository : IGenreRepository
             .ToListAsync();
     }
 
-    public int NumberOfTitles()
+    public int NumberOfGenre()
     {
         return _context.Genres.Count();
     }
