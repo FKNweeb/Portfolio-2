@@ -54,7 +54,7 @@ public class UserController : BaseController
     public async Task<IActionResult> GetUserById([FromRoute] int id)
     {
         var user = await _userRepo.GetUserById(id);
-        if(user == null) return NotFound("User does not exist");
+        if(user == null) return NotFound();
         var userDto = user.ToUserDto();
 
         return Ok(userDto);
