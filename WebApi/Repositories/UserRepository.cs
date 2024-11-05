@@ -27,7 +27,7 @@ public class UserRepository : IUserRepository
         return await _context.Users
             .ToListAsync();
     }
-    // Is ID not a string in the database?
+   
     public async Task<User?> GetUserById(int id)
     {
         return await _context.Users.FirstOrDefaultAsync(e=>e.UserId == id);
@@ -40,6 +40,8 @@ public class UserRepository : IUserRepository
     public async Task<User?> CreateUser(User user)
     {
         user.UserId = await _context.Users.MaxAsync(k => k.UserId) + 1;
+        User? existingUser = await _context.Users.FirstOrDefaultAsync(e=>e.UserEmail == user.UserEmail);
+        if(user.UserEmail == existingUser?.UserEmail ) { return null; }
         await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
         return user;
