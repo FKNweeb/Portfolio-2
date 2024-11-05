@@ -22,7 +22,7 @@ public class UserController : BaseController
     private readonly LinkGenerator _linkGenerator;
     private readonly IConfiguration _configuration;
     private readonly Hashing _hashing;
-
+   
     public UserController(IUserRepository UserRepo, 
                           LinkGenerator linkGenerator,
                           IConfiguration configuration,
