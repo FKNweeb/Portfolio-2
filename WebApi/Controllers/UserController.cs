@@ -23,10 +23,7 @@ public class UserController : BaseController
     private readonly IConfiguration _configuration;
     private readonly Hashing _hashing;
 
-    public UserController()
-    {
-        _userRepo = new IUserRepository(this);
-    }
+   
     public UserController(IUserRepository UserRepo, 
                           LinkGenerator linkGenerator,
                           IConfiguration configuration,
