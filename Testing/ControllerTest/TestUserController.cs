@@ -69,27 +69,14 @@ public class TestUserController
             UserPassword = "Testasdf",
         };
 
-        var json = JsonSerializer.Serialize(newUser);
-        var (user, statusCode) = await PostData($"{UserApi}/create", json);
+        
+        var (user, statusCode) = await PostData($"{UserApi}/create", newUser);
 
-        //string? id = null;
-        //if(user?.Value("userId") == null)
-        //{
-        //    var url = user?.Value("url");
-        //    if(url != null)
-        //    {
-        //        id = url.Substring(url.LastIndexOf('/')+1);
-        //    }
-        //}
-        //else
-        //{
-        //    id = user.Value("userId");
-        //}
 
         Assert.Equal(HttpStatusCode.Created, statusCode);
 
-        //await DeleteData($"{UserApi}/{user?.Value("userId")}");
 
+        await DeleteData($"{UserApi}/{user.Value("UserId")}");
     }
 
 
