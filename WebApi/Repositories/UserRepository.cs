@@ -39,7 +39,8 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> CreateUser(User user)
     {
-        user.UserId = await _context.Users.MaxAsync(k => k.UserId) + 1;
+        try { user.UserId = await _context.Users.MaxAsync(k => k.UserId) + 1; }
+        catch (Exception) { user.UserId = 1; }
         User? existingUser = await _context.Users.FirstOrDefaultAsync(e=>e.UserEmail == user.UserEmail);
         if(user.UserEmail == existingUser?.UserEmail ) { return null; }
         await _context.Users.AddAsync(user);

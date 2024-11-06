@@ -207,9 +207,6 @@ public class TitleController : BaseController
            titlesDto
            );
         return Ok(result);
-
-        
-
     }
 
 
