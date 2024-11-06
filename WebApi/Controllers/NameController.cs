@@ -27,6 +27,14 @@ public class NameController : BaseController
         _linkGenerator = linkGenerator;
         _userRepository = userRepository;
     }
+    /// <summary>
+    /// Get all names in a paginated list, if they wants to order by name 
+    /// in a ascending and descending way
+    /// </summary>
+    /// <param name="query">SortBy and IsDescending</param>
+    /// <param name="page">The page number</param>
+    /// <param name="pageSize">The size of he pages</param>
+    /// <returns></returns>
 
     [HttpGet(Name =nameof(GetAllNames))]
     public async Task<IActionResult> GetAllNames([FromQuery] QueryName query, int page=0, int pageSize=25)
@@ -41,6 +49,12 @@ public class NameController : BaseController
 
         return Ok(result);
     }
+    /// <summary>
+    /// Finds information about a person by their primary name
+    /// and updates search history
+    /// </summary>
+    /// <param name="primaryName">The name of a person</param>
+    /// <returns></returns>
 
     [HttpGet("{primaryName}")]
     public async Task<IActionResult> GetName([FromRoute] string primaryName)
@@ -56,6 +70,12 @@ public class NameController : BaseController
         }
         return Ok(new { name, updatedHistory });
     }
+    /// <summary>
+    /// Finds names based on differnet keywords, like title, plot, character.
+    /// The search is saved in the search history
+    /// </summary>
+    /// <param name="query">The query contains title, plot, character and person</param>
+    /// <returns></returns>
 
     [HttpGet("search")]
     public async Task<IActionResult> SearchForName([FromQuery] SearchNameQuery query)
@@ -73,6 +93,11 @@ public class NameController : BaseController
 
         return Ok(names);
     }
+    /// <summary>
+    /// Finds the coplayer/coplayers which are related to a specific person, by nameId
+    /// </summary>
+    /// <param name="nameId">The id of a person</param>
+    /// <returns></returns>
 
     [HttpGet("searchcoplayer/{nameId}")]
     public async Task<IActionResult> SearForCoPlayers([FromRoute] string nameId)
@@ -81,7 +106,11 @@ public class NameController : BaseController
         if (names == null) { return NotFound(); }
         return Ok(names);
     }
-
+    /// <summary>
+    /// Findes all titls that related to a specific person, through the PrimaryName
+    /// </summary>
+    /// <param name="name">The name of a person</param>
+    /// <returns></returns>
     [HttpGet("titlerelated/{name}")]
     public async Task<IActionResult> TitleRelatedName([FromRoute] string name)
     {
