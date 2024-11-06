@@ -47,14 +47,14 @@ public class NameController : BaseController
     {
         var name = await _nameRepo.GetNameByPrimaryName(primaryName);
         //Not a good practice because it violates restfull practices 
-        
 
-        var updatedHistory = await _userRepository.UpdateSearchHistory(primaryName);
+
+        //var updatedHistory = await _userRepository.UpdateSearchHistory(primaryName);
         if (name == null)
         {
             return NotFound();
         }
-        return Ok(new { name, updatedHistory });
+        return Ok(name);
     }
 
     [HttpGet("search")]
@@ -63,10 +63,10 @@ public class NameController : BaseController
         var names = await _nameRepo.SearchForName(query.title, query.plot, query.character, query.person);
         var keywords = new List<string> { query.title, query.plot, query.character, query.person };
         
-        foreach (var keyword in keywords) 
-        {
-            await _userRepository.UpdateSearchHistory(keyword);
-        }
+        //foreach (var keyword in keywords) 
+        //{
+        //    await _userRepository.UpdateSearchHistory(keyword);
+        //}
 
         
         if (names == null) { return NotFound(); }

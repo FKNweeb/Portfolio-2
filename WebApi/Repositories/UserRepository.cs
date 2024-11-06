@@ -82,12 +82,17 @@ public class UserRepository : IUserRepository
             .ToListAsync();
     }
     public async Task<bool> UpdateSearchHistory(string keyword)
-    { 
-        var lastrecord = await _context.SearchHistories.MaxAsync(u => u.HistoryId);
+    {
+        var lastrecord = 0;
+        try
+        {
+            lastrecord = await _context.SearchHistories.MaxAsync(u => u.HistoryId);
+        }
+        catch (Exception ex) { }
 
         var SearchEntry = new SearchHistory
         {
-            HistoryId = (int)lastrecord + 1,
+            HistoryId = lastrecord + 1,
             Description = keyword
         };
 
