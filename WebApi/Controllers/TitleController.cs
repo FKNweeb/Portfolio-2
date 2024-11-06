@@ -172,9 +172,6 @@ public class TitleController : BaseController
            titlesDto
            );
         return Ok(result);
-
-        
-
     }
 
     [HttpGet("genre/{genre}")]
