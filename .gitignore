@@ -364,4 +364,6 @@ FodyWeavers.xsd
 
 # Exclude appsettings.json
 WebApi/appsettings.json
+
+## Exclude WebApi.http
 WebApi/WebApi.http
