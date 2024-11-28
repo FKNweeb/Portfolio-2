@@ -2,17 +2,17 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Interfaces;
 using WebApi.Repositories;
-using Newtonsoft;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-
+// Add services to the container
 builder.Services.AddControllers();
 
 
@@ -47,6 +47,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         }
     );
 
+//CORS policy to enable requests from our frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("allowed", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+    
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -60,6 +72,7 @@ if (app.Environment.IsDevelopment())
 app.UseRouting();
 // app.UseHttpsRedirection();
 
+app.UseCors("allowed");
 app.UseAuthentication();
 app.UseAuthorization();
 

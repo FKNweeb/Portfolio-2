@@ -18,6 +18,8 @@ public class TitleRepository : ITitlteRepository
     {
         _context = context;
     }
+
+    //Add ordering for sake of the frontend results
     public async Task<List<Title>> GetAllAsync(int page, int pageSize)
     {
         return await _context.Titles
@@ -29,6 +31,7 @@ public class TitleRepository : ITitlteRepository
                 .ThenInclude(l => l.Language)
             .Include(p => p.TitlePoster)
             .Include(tt => tt.TitleIsType)
+            .OrderBy(tt=>tt.TitleIsType.TypeOfTitle == "movie" ? 0 : 1) //Ordering prioritize movie
             .Skip(page * pageSize)
             .Take(pageSize)
             .ToListAsync();
