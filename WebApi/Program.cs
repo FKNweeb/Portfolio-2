@@ -25,7 +25,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 });
 
 builder.Services.AddDbContext<ImdbContext>(
-    options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options => options.UseNpgsql(builder.Configuration.GetConnectionString("LocalHost")));
 
 builder.Services.AddSingleton(new Hashing());
 builder.Services.AddScoped<ITitlteRepository, TitleRepository>();
