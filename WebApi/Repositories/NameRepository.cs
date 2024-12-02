@@ -58,23 +58,26 @@ public class NameRepository : INameRepository
         return _context.Names.Count();
     }
 
-    public async Task<GetAllNameDTO?> GetNameByPrimaryName(string PrimaryName)
+    public async Task<List<GetAllNameDTO?>> GetNameByPrimaryName(string PrimaryName, int page, int pageSize)
     {
         return await _context.Names
-            .Where(n=>n.PrimaryName == PrimaryName)
+            .Where(n=>n.PrimaryName.Contains(PrimaryName))
             .Include(tk => tk.KnownForTitles)
             .ThenInclude(t => t.Title)
             .Include(p => p.ProfessionNames)
             .ThenInclude(p => p.Profession)
+            .Skip(page * pageSize)
+            .Take(pageSize )
              .Select(n => new GetAllNameDTO
              {
+                 nconst= n.NameId,
                  Name = n.PrimaryName,
                  NameId = n.NameId,
                  BirthYear = n.BirthYear,
                  DeathYear = n.DeathYear,
                  KnownForTitles = n.KnownForTitles.Select(g => g.Title.PrimaryTitle).ToList(),
                  Professions = n.ProfessionNames.Select(p => p.Profession.ProfessionTitle).ToList(),
-             }).FirstOrDefaultAsync();
+             }).ToListAsync();
     }
 
     public async Task<List<NameSearchResults>> SearchForName(string title, string plot, string character, string person)

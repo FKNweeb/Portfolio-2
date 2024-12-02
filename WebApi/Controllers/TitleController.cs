@@ -4,6 +4,7 @@ using WebApi.DTO.TitleDtos;
 using WebApi.Interfaces;
 using WebApi.Mappers;
 using Microsoft.IdentityModel.Tokens;
+using WebApi.Models.TitleRelatedModels;
 
 
 namespace WebApi.Controllers;
@@ -142,25 +143,26 @@ public class TitleController : BaseController
 
                     var total = _titleRepo.NumberOfTitlesPerKeyword(query.keywords[0]);
 
+                    var titles = new List<Title>();
+                    foreach(var tconst in results)
+                    {
+                        titles.Add(await _titleRepo.GetTitleById(tconst.tconst));
+                    }
+                    var titlesDto = titles.Select(t => t.ToTitleAndPlotDto());
+
+
+
                     object result = CreatePaging(
                     nameof(Search),
                     page,
                     pageSize,
                     total,
-                    results
+                    titlesDto
                     );
 
                     if( results == null)
                     {
                         return NotFound();
-                    }
-
-                    if (results.Count == 1)
-                    {
-                        var id = results[0].tconst;
-                        var title = await _titleRepo.GetTitleById(id);
-                        var titleDto = title.ToTitleAndPlotDto();
-                        return Ok(titleDto);
                     }
                     return Ok(result);
                 }

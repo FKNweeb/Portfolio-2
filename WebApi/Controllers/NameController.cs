@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using NpgsqlTypes;
 using System.Diagnostics.Tracing;
 using System.Numerics;
 using WebApi.Data;
 using WebApi.DTO.NameDtos;
 using WebApi.Interfaces;
 using WebApi.Mappers;
+using static Azure.Core.HttpHeader;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
@@ -56,19 +58,21 @@ public class NameController : BaseController
     /// <param name="primaryName">The name of a person</param>
     /// <returns></returns>
 
-    [HttpGet("{primaryName}")]
-    public async Task<IActionResult> GetName([FromRoute] string primaryName)
-    {
-        var name = await _nameRepo.GetNameByPrimaryName(primaryName);
-        //Not a good practice because it violates restfull practices 
+    [HttpGet("{primaryName}", Name = nameof(GetName))]
 
+    public async Task<IActionResult> GetName([FromRoute] string primaryName, int page =0, int pageSize=25)
+    {
+        var name = await _nameRepo.GetNameByPrimaryName(primaryName, page, pageSize);
+        var total = _nameRepo.NumberOfName();
+
+        object result = CreatePaging(nameof(GetName), page, pageSize, total, name);
 
         //var updatedHistory = await _userRepository.UpdateSearchHistory(primaryName);
         if (name == null)
         {
             return NotFound();
         }
-        return Ok(name);
+        return Ok(result);
     }
     /// <summary>
     /// Finds names based on differnet keywords, like title, plot, character.
