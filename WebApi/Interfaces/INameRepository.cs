@@ -10,7 +10,7 @@ public interface INameRepository
 {
     Task<List<GetAllNameDTO>> GetAllNamesAsync(QueryName query, int page, int pageSize);
 
-    Task<GetAllNameDTO?> GetNameByPrimaryName(string PrimaryName);
+    Task<List<GetAllNameDTO?>> GetNameByPrimaryName(string PrimaryName, int page, int pageSize);
 
     Task<List<NameSearchResults>> SearchForName(string title, string plot, string character, string person);
 

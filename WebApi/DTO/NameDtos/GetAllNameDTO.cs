@@ -6,7 +6,7 @@ namespace WebApi.DTO.NameDtos;
 
 public class GetAllNameDTO
 {
-    
+    public string nconst { get; set; }
     public string Name { get; set; }
     public string BirthYear { get; set; }
     public string DeathYear { get; set; }

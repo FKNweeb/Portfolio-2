@@ -16,6 +16,7 @@ public static class TitleMapper
     {
         return new TitleAndPlotDto
         {
+            tconst = titleObject.TitleId,
             PrimaryTitle = titleObject.PrimaryTitle,
             Plot = titleObject.TitlePlot?.Plot.ToString(),
             StartDate = titleObject.TitleDate?.StartYear.ToString(),
@@ -27,7 +28,7 @@ public static class TitleMapper
             //Type = titleObject.TitleIsType?.TypeOfTitle?.ToString(),
             Type = !string.IsNullOrEmpty(titleObject.TitleIsType?.TypeOfTitle) ? titleObject.TitleIsType.TypeOfTitle.ToString() : null,
 
-        }; ;
+        }; 
     }
 
    
