@@ -18,8 +18,14 @@ Content-Type: application/json
 
 {
     "UserName": "Test",
-    "Password": "test"
+    "Password": "abcd_1234"
 }
+
+###
+
+GET {{WebApi_HostAddress}}/api/users/getUser
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImV4cCI6MTczMjg5Mjg2Mn0.sYGMR9QapywVM4AlKtBcnkUTGuyohRRKaQBMZJFyaIQ
 
 ###
 
@@ -30,10 +36,11 @@ Accept: application/json
 
 POST {{WebApi_HostAddress}}/api/users/bookmarkName
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImV4cCI6MTczMDgwNjQwNn0.PnyW0rqZUODV04hrsYdav506aP_hOFu26h96yODrvis
+Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImV4cCI6MTczMjk1MTIxNX0.CIwmVgw1M3YMGsCuPwkV-r09b_xMQ1fd2UUoUIizQP8
 Content-Type: application/json
+
 {
-    "nameId" : "nm0000156"
+    "nameId" : "nm0000129"
 }
 
 ###
@@ -50,10 +57,11 @@ Content-Type: application/json
 
 POST {{WebApi_HostAddress}}/api/users/bookmarkTitle
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImV4cCI6MTczMDgwNjQwNn0.PnyW0rqZUODV04hrsYdav506aP_hOFu26h96yODrvis
+Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImV4cCI6MTczMjk1MTIxNX0.CIwmVgw1M3YMGsCuPwkV-r09b_xMQ1fd2UUoUIizQP8
 Content-Type: application/json
+
 {
-    "TitleId" : "tt25154648"
+    "TitleId" : "tt0425324"
 }
 
 ###
@@ -86,3 +94,6 @@ Content-Type: application/json
     "TitleId" :  "tt32467748",
     "Rate" : 9
 }
+
+###
+

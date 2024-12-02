@@ -69,6 +69,7 @@ public class NameRepository : INameRepository
              .Select(n => new GetAllNameDTO
              {
                  Name = n.PrimaryName,
+                 NameId = n.NameId,
                  BirthYear = n.BirthYear,
                  DeathYear = n.DeathYear,
                  KnownForTitles = n.KnownForTitles.Select(g => g.Title.PrimaryTitle).ToList(),

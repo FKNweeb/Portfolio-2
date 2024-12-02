@@ -34,7 +34,11 @@ public class UserRepository : IUserRepository
     }
     public async Task<User?> GetUserByUserName(string userName)
     {
-        return await _context.Users.FirstOrDefaultAsync(e=>e.UserName == userName);
+        return await _context.Users.Include(u => u.BookMarkNames)
+                                   .ThenInclude(b => b.Name)
+                                   .Include(u => u.BookMarkTitles)
+                                   .ThenInclude(b => b.Title)
+                                   .FirstOrDefaultAsync(e=>e.UserName == userName);
     }
 
     public async Task<User?> CreateUser(User user)

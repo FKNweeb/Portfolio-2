@@ -269,5 +269,17 @@ public class UserController : BaseController
 
         return Ok(rate);
     }
+
+    [HttpGet("getUser")]
+    [Authorize]
+    public async Task<IActionResult> GetUser() {
+        var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+        if (userName == null) { return Unauthorized(); }
+
+        var user = _userRepo.GetUserByUserName(userName)?.Result?.ToUserInfoDTO();
+
+        if (user == null) { return Unauthorized(); }
+        return Ok(user);
+    }
 }
 

@@ -25,4 +25,13 @@ public static class UserMapper
             UserEmail = CreateUserDto.UserEmail,
         };
     }
+
+    public static UserInfoDTO ToUserInfoDTO(this User userObject){
+        return new UserInfoDTO {
+            UserName = userObject.UserName,
+            UserEmail = userObject.UserEmail,
+            BookMarkNames = userObject.BookMarkNames,
+            BookMarkTitles = userObject.BookMarkTitles,
+        };
+    }
 }
