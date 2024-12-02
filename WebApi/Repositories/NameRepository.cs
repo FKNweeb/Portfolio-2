@@ -61,7 +61,7 @@ public class NameRepository : INameRepository
     public async Task<List<GetAllNameDTO?>> GetNameByPrimaryName(string PrimaryName, int page, int pageSize)
     {
         return await _context.Names
-            .Where(n=>n.PrimaryName.Contains(PrimaryName))
+            .Where(n=>n.PrimaryName.ToLower().Contains(PrimaryName.ToLower()))
             .Include(tk => tk.KnownForTitles)
             .ThenInclude(t => t.Title)
             .Include(p => p.ProfessionNames)
@@ -70,7 +70,7 @@ public class NameRepository : INameRepository
             .Take(pageSize )
              .Select(n => new GetAllNameDTO
              {
-                 nconst= n.NameId,
+                 
                  Name = n.PrimaryName,
                  NameId = n.NameId,
                  BirthYear = n.BirthYear,
