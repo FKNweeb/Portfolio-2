@@ -7,6 +7,7 @@ using WebApi.Models;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 using WebApi.Models.FunctionBasedModels;
 using WebApi.DTO.TitleDtos;
+using WebApi.Models.NameRelatedModels;
 
 namespace WebApi.Repositories;
 
@@ -56,6 +57,8 @@ public class TitleRepository : ITitlteRepository
             .ThenInclude(l => l.Language)
         .Include(p => p.TitlePoster)
         .Include(tt => tt.TitleIsType)
+        .Include(c => c.Crews)
+        .ThenInclude(cn => cn.Name)
         .Select(t => new Title
         {
             TitleId = t.TitleId,
@@ -71,7 +74,11 @@ public class TitleRepository : ITitlteRepository
                 Language = l.Language
             }).ToList(),
             TitlePoster = t.TitlePoster,
-            TitleIsType = t.TitleIsType
+            TitleIsType = t.TitleIsType,
+            Crews = t.Crews.Select(n => new Crew
+            {
+                Name = n.Name
+            }).ToList(),
         })
         .FirstOrDefaultAsync();
 
