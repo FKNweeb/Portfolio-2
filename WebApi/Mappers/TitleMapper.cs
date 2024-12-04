@@ -27,7 +27,7 @@ public static class TitleMapper
             Poster = titleObject.TitlePoster?.PosterUrl.ToString(),
             //Type = titleObject.TitleIsType?.TypeOfTitle?.ToString(),
             Type = !string.IsNullOrEmpty(titleObject.TitleIsType?.TypeOfTitle) ? titleObject.TitleIsType.TypeOfTitle.ToString() : null,
-
+            Crew = titleObject.Crews?.Select(n => n.Name?.PrimaryName).ToList()
         }; 
     }
 

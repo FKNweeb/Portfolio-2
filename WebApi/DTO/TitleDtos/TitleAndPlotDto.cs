@@ -21,6 +21,8 @@ public class TitleAndPlotDto
 
     public string Type { get; set; }
 
+    public IList<string> Crew { get; set; } = new List<string>();
+
    
 
 }
