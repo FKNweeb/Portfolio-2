@@ -123,5 +123,12 @@ public class NameController : BaseController
         return Ok(names);
     }
 
-    //TODO: Reconfigure the endpoints
+    [HttpGet("name/{nameId}")]
+    public async Task<IActionResult> GetNameById([FromRoute] string nameId) {
+        var name = await _nameRepo.GetNameById(nameId);
+        
+        if(name == null) {return NotFound();}
+
+        return Ok(name);
+    }
 }

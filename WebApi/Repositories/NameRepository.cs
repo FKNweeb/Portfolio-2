@@ -80,6 +80,24 @@ public class NameRepository : INameRepository
              }).ToListAsync();
     }
 
+    public async Task<GetAllNameDTO> GetNameById(string id) {
+        return await _context.Names
+            .Where(n=>n.NameId == id)
+            .Include(tk => tk.KnownForTitles)
+            .ThenInclude(t => t.Title)
+            .Include(p => p.ProfessionNames)
+            .ThenInclude(p => p.Profession)
+            .Select(n => new GetAllNameDTO
+             {  
+                Name = n.PrimaryName, 
+                NameId = n.NameId,
+                BirthYear = n.BirthYear,
+                DeathYear = n.DeathYear,
+                KnownForTitles = n.KnownForTitles.Select(g => g.Title.PrimaryTitle).ToList(),
+                Professions = n.ProfessionNames.Select(p => p.Profession.ProfessionTitle).ToList(),
+             }).FirstOrDefaultAsync();
+    }
+
     public async Task<List<NameSearchResults>> SearchForName(string title, string plot, string character, string person)
     {
         return await _context.StructuredNameSearch(title, plot, character, person).ToListAsync();
