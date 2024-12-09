@@ -79,6 +79,8 @@ public class TitleRepository : ITitlteRepository
             {
                 Name = n.Name
             }).ToList(),
+            AverageRating = t.AverageRating,
+            NumberOfVotes = t.NumberOfVotes
         })
         .FirstOrDefaultAsync();
 

@@ -2,6 +2,7 @@
 using Microsoft.OpenApi.Services;
 using WebApi.DTO.TitleDtos;
 using WebApi.Models.FunctionBasedModels;
+using WebApi.Models.NameRelatedModels;
 using WebApi.Models.TitleRelatedModels;
 
 using SearchResult = WebApi.Models.FunctionBasedModels.SearchResult;
@@ -27,7 +28,9 @@ public static class TitleMapper
             Poster = titleObject.TitlePoster?.PosterUrl.ToString(),
             //Type = titleObject.TitleIsType?.TypeOfTitle?.ToString(),
             Type = !string.IsNullOrEmpty(titleObject.TitleIsType?.TypeOfTitle) ? titleObject.TitleIsType.TypeOfTitle.ToString() : null,
-            Crew = titleObject.Crews?.Select(n => n.Name?.PrimaryName).ToList()
+            Crew = titleObject.Crews?.Select(n => n.Name?.PrimaryName).ToList(),
+            AverageRating = titleObject.AverageRating,
+            NumberOfVotes = titleObject.NumberOfVotes
         }; 
     }
 

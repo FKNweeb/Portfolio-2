@@ -23,6 +23,8 @@ public class TitleAndPlotDto
 
     public IList<string> Crew { get; set; } = new List<string>();
 
-   
+    public double? AverageRating { get; set; }
+
+    public int? NumberOfVotes { get; set; }
 
 }
