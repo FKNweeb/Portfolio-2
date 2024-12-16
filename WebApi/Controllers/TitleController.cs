@@ -24,6 +24,14 @@ public class TitleController : BaseController
         _linkGenerator = linkGenerator;
         _genreRepository = genreRepository;
     }
+    [HttpGet("{titleId}")]
+    public async Task<IActionResult> GetTitleById([FromRoute] string titleId)
+    {
+        var title = await _titleRepo.GetTitleById(titleId);
+        if (title == null) return NotFound();
+        var titleDto = title.ToTitleAndPlotDto();
+        return Ok(titleDto);
+    }
 
     /// <summary>
     /// Returns all titles found in the database  paginated.
