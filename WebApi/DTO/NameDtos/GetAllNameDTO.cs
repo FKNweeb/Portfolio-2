@@ -1,6 +1,7 @@
 using System;
 using System.Security;
 using WebApi.Models.TitleRelatedModels;
+using WebApi.Models.UserRelatedModels;
 
 namespace WebApi.DTO.NameDtos;
 
@@ -15,5 +16,6 @@ public class GetAllNameDTO
 
     public List<string> Professions { get; set; } = new List<string>();
 
+    public LocalNameRating? LocalNameRatings { get; set; } 
     
 }
