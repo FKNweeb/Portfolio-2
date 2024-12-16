@@ -87,6 +87,8 @@ public class NameRepository : INameRepository
             .ThenInclude(t => t.Title)
             .Include(p => p.ProfessionNames)
             .ThenInclude(p => p.Profession)
+            .Include(n => n.RateNames)
+            .ThenInclude(rn => rn.LocalNameRating)
             .Select(n => new GetAllNameDTO
              {  
                 Name = n.PrimaryName, 
@@ -95,6 +97,7 @@ public class NameRepository : INameRepository
                 DeathYear = n.DeathYear,
                 KnownForTitles = n.KnownForTitles.Select(g => g.Title.PrimaryTitle).ToList(),
                 Professions = n.ProfessionNames.Select(p => p.Profession.ProfessionTitle).ToList(),
+                LocalNameRatings = n.RateNames.FirstOrDefault(rn => rn.LocalNameRating.NameId == id).LocalNameRating,
              }).FirstOrDefaultAsync();
     }
 

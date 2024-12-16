@@ -8,4 +8,6 @@ public class UserInfoDTO
     public string UserEmail { get; set; }
     public IList<BookMarkName?> BookMarkNames { get; set; } 
     public IList<BookMarkTitle?> BookMarkTitles { get; set; }
+    public IList<RateName?> RateNames { get; set; }
+    public IList<RateTitle?> RateTitles { get; set; }
 }

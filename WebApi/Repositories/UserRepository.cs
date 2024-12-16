@@ -38,6 +38,8 @@ public class UserRepository : IUserRepository
                                    .ThenInclude(b => b.Name)
                                    .Include(u => u.BookMarkTitles)
                                    .ThenInclude(b => b.Title)
+                                   .Include(u => u.RateNames)
+                                   .Include(u => u.RateTitles)
                                    .FirstOrDefaultAsync(e=>e.UserName == userName);
     }
 

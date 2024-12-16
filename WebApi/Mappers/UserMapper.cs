@@ -32,6 +32,8 @@ public static class UserMapper
             UserEmail = userObject.UserEmail,
             BookMarkNames = userObject.BookMarkNames,
             BookMarkTitles = userObject.BookMarkTitles,
+            RateNames = userObject.RateNames,
+            RateTitles = userObject.RateTitles,
         };
     }
 }
